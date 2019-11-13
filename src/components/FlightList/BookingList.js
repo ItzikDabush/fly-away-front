@@ -20,12 +20,12 @@ class BookingList extends Component {
   render() {
     const { classes } = this.props;
     let bookingOptions = this.props.bookingDetails.map(option => {
-      console.log(option);
-      console.log(this.props);
+     
+     
       let agent = this.props.agents.find(
         agent => agent.Id === option.Agents[0]
       );
-      console.log(agent);
+    
 
       return (
           <div className={classes.optionContainer}key={option.DeeplinkUrl}>

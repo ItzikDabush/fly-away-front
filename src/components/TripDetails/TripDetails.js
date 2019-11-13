@@ -61,9 +61,11 @@ class TripDetails extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  //Set the Select inputvalu to be the originPlace/destinationPlace
-  handleChoose(chosen, identeifier) {
-    this.setState({ [identeifier]: chosen });
+  //Set the Select inputvalu to be the outboundDate/inboundDate
+  // if the identifier id outboundate then set the inbounde date to 5 days ahead - affect on the current value
+  handleChoose(chosen, identeifier, newInboundedate) {
+    console.log(chosen, identeifier, newInboundedate)
+    this.setState({ [identeifier]: chosen, ...newInboundedate && { inboundDate: newInboundedate } });
   }
 
   handleClick(e) {
@@ -76,7 +78,7 @@ class TripDetails extends Component {
     this.setState({
       ...this.state,
       [name]: event.target.checked,
-      inboundDate: ""
+
     });
   };
 

@@ -19,7 +19,8 @@ const styles = theme => ({
   },
   links: {
     textDecoration: "none",
-    color:'#cccccc' 
+    color: '#cccccc' ,
+    marginLeft: '10px'
   }
  
 });

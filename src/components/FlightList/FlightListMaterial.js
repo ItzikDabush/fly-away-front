@@ -10,6 +10,11 @@ import Itiniary from "./Itiniary";
 
 const styles = theme =>
   console.log(theme) || {
+    root: {
+      backgroundColor: theme.palette.primary.light,
+      marginBottom: '0.3rem',
+      color: 'black'
+    },
     heading: {
       fontSize: theme.typography.pxToRem(15),
       flexBasis: "100%",
@@ -34,7 +39,7 @@ class FlightListMaterial extends Component {
   }
 
   getDetailsOfLeg(legId) {
-    console.log(legId);
+
     const { Legs, Carriers, Places, Segments, Agents } = this.props.results;
     let LegDetails = this.getDetails(legId, Legs);
 
@@ -84,9 +89,9 @@ class FlightListMaterial extends Component {
         outboundDetails: outboundDetails,
         carriersOutbound: carriersOutbound
       };
-      
+
       let inbound = null;
-      console.log(inbound);
+    
       let carriersInbound = [];
       if (itin.InboundLegId) {
         console.log("inside if");
@@ -100,7 +105,7 @@ class FlightListMaterial extends Component {
           carriersInbound: carriersInbound
         };
       }
-      console.log(inbound);
+    
 
       let carriers = Array.from(
         new Set(carriersInbound.concat(carriersOutbound))
@@ -113,6 +118,7 @@ class FlightListMaterial extends Component {
 
       return (
         <ExpansionPanel
+          color="primary"
           className={classes.root}
           TransitionProps={{ unmountOnExit: true }}
           key={index}
@@ -120,6 +126,7 @@ class FlightListMaterial extends Component {
           onChange={this.handleChange(`panel${index}`)}
         >
           <ExpansionPanelSummary
+            className={classes.expansionPanelSummary}
             expandIcon={<ExpandMoreIcon />}
             aria-controls={`panel${index}bh-content`}
             id={`panel${index}bh-header`}
@@ -129,17 +136,17 @@ class FlightListMaterial extends Component {
               lowestPrice={lowestPrice}
               itineraryDetails={itin}
               outbound={outbound}
-              {...inbound !== null ? inbound={inbound}: ''}
+              {...(inbound !== null ? (inbound = { inbound }) : "")}
               data={this.props.results}
             />
           </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
+          <ExpansionPanelDetails className={classes.expansionPanelDetails}>
             <DetailsTabs
               carriers={carriers}
               lowestPrice={lowestPrice}
               itineraryDetails={itin}
               outbound={outbound}
-              {...inbound !== null ? {...inbound}: ''}
+              {...(inbound !== null ? { ...inbound } : "")}
               data={this.props.results}
             />
           </ExpansionPanelDetails>

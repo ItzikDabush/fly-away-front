@@ -44,14 +44,14 @@ const styles = {
     }
   },
   "MuiInput-underline": {
-    color: 'green',
+    color: "green",
     "& :before": {
-      color: 'black',
+      color: "black",
       borderBottom: "2px solid white"
     }
   },
   underline: {
-    color: 'pink'
+    color: "pink"
   }
 };
 
@@ -67,9 +67,13 @@ class DateComp extends Component {
   }
 
   handleDateChange = (date, other) => {
-    console.log(other);
+    console.log(date, other, this.props.name);
+    let newInboundedate = null;
+    if (this.props.name === "outboundDate") {
+      newInboundedate = format(addDays(date, 5), "yyyy-MM-dd");
+    }
     this.setSelectedDate(date);
-    this.props.handleChoose(other, this.props.name);
+    this.props.handleChoose(other, this.props.name, newInboundedate);
   };
 
   render() {
@@ -106,7 +110,9 @@ class DateComp extends Component {
               }}
             />
           }
+         
           disablePast
+          minDate={this.props.minDate && this.props.minDate}
           autoOk
           margin="normal"
           id="date-picker-dialog"

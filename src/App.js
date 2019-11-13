@@ -8,16 +8,16 @@ import { withStyles } from "@material-ui/core/styles";
 import indigo from "@material-ui/core/colors/indigo";
 import pink from "@material-ui/core/colors/pink";
 import red from "@material-ui/core/colors/red";
-import ContainerPage from "./components/ContainerPage";
+import ContainerPage from "./components/Layout/ContainerPage";
 import Footer from "./components/Layout/Footer";
 import Header from "./components/Layout/Header";
 
 const theme = createMuiTheme({
   palette: {
-    primary: {
-      main: "#365954",
-      contrastText: "#ffffff"
-    },
+    // primary: {
+    //   // main: "#365954",
+    //   contrastText: "#ffffff"
+    // },
     secondary: {
       main: "#27b8a3"
     }
@@ -44,7 +44,7 @@ class App extends Component {
       tripToSearch: {
         oneWay: false
       },
-      resultsForTrip: "",
+      resultsForTrip: seedOffers,
       isFetching: false
     };
 
@@ -70,7 +70,7 @@ class App extends Component {
   getOffers(data) {
     // console.log(data);
     this.setState(
-      {
+      { resultsForTrip: '',
         isFetching: true,
         tripToSearch: { ...data }
       },
@@ -123,7 +123,7 @@ class App extends Component {
             cityByIp={this.state.sitePrefernces.cityByIp}
             getOffers={this.getOffers}
           />
-          {this.state.resultsForTrip ? (
+          {this.state.resultsForTrip.Itineraries ? (
             <FlightListMaterial results={this.state.resultsForTrip} />
           ) : (
             <ContainerPage isFetching={this.state.isFetching} />

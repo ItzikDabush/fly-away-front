@@ -1,15 +1,15 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import sizes from "../sizes";
-import axios from 'axios'
+import axios from "axios";
 import format from "date-fns/format";
 
 const styles = theme => ({
   root: {
     display: "flex",
     justifyContent: "space-between",
-    marginBottom: '10px',
-    fontSize: '12px'
+    marginBottom: "10px",
+    fontSize: "12px"
   },
   imgCarrier: {
     display: "flex",
@@ -23,10 +23,16 @@ const styles = theme => ({
     // width: '40%'
   },
   legDeatils: {
-width: '30%'
+    width: "30%"
   },
   flightDetails: {
-width:' 30%'
+    width: " 30%"
+  },
+  stops: {
+    display: 'flex',
+    justifyContent: 'space-around',
+    position: 'relative',
+    top: '-11px'
   }
 });
 
@@ -63,16 +69,27 @@ class LegSummery extends Component {
 
     let stops =
       StopsDetails === "Direct" ? (
-        <span>{StopsDetails}</span>
+        <>
+          <hr></hr>
+          <span>{StopsDetails}</span>
+        </>
       ) : (
-        StopsDetails.map(stop => <span key={stop.Code}>{stop.Code} </span>)
+        <>
+          <hr></hr>
+          <div className={classes.stops}>
+            {StopsDetails.map(stop => (
+              <div key={stop.Code}>
+                <p>*</p>
+                {stop.Code}{" "}
+              </div>
+            ))}
+          </div>
+        </>
       );
     let carriersImages = CarriersDetails.map(carrier => {
-      
       return (
         <div className={classes.imgContainer} key={carrier.Code}>
           <img
-            
             src={carrier.ImageUrl}
             alt={carrier.Name}
             className="carrier-logo"
@@ -92,7 +109,7 @@ class LegSummery extends Component {
         <div className={classes.flightDetails}>
           <div className="duraion">{durationInHours}</div>
 
-          <div className="stops">Stops: {stops}</div>
+          <div>{stops}</div>
         </div>
         <div className={classes.legDeatils}>
           <p className="time">{ArrivalTime}</p>

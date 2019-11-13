@@ -19,7 +19,7 @@ const styles = theme => ({
     // boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
     color: "white",
     marginBottom: "10px",
-    padding: "10px 30px",
+    padding: "0px 30px",
     display: "flex",
     justifyContent: "space-between",
     "& svg": {
@@ -28,7 +28,7 @@ const styles = theme => ({
   },
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 140
+    minWidth: 180
   },
   selectEmpty: {
     marginTop: theme.spacing(2)
@@ -45,6 +45,9 @@ const styles = theme => ({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center"
+  },
+  logeText: {
+    fontSize: '0.8rem'
   },
   underline: {
     "&:hover": {
@@ -109,7 +112,7 @@ class Header extends Component {
       <header className={this.props.classes.root}>
         <div className={classes.logo}>
           <FlightIcon fontSize="small" />
-          <p>Fly Away</p>
+          <p className={classes.logeText}>Fly Away</p>
         </div>
 
         <FormControl className={this.props.classes.formControl} color="primary">
