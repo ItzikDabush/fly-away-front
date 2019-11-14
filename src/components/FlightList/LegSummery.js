@@ -29,10 +29,10 @@ const styles = theme => ({
     width: " 30%"
   },
   stops: {
-    display: 'flex',
-    justifyContent: 'space-around',
-    position: 'relative',
-    top: '-11px'
+    display: "flex",
+    justifyContent: "space-around",
+    position: "relative",
+    top: "-11px"
   }
 });
 

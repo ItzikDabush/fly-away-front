@@ -5,6 +5,12 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
 
 
 import currencyList from "./CurrencyList";
@@ -12,60 +18,64 @@ import FlightIcon from "@material-ui/icons/Flight";
 import Input from "@material-ui/core/Input";
 
 const styles = theme => ({
-  root: {
-    background: theme.palette.primary.main,
-    border: 0,
-    borderRadius: 3,
-    // boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
-    color: "white",
-    marginBottom: "10px",
-    padding: "0px 30px",
-    display: "flex",
-    justifyContent: "space-between",
-    "& svg": {
-      color: "white"
-    }
-  },
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 180
-  },
+  // root: {
+  //   background: theme.palette.primary.main,
+  //   border: 0,
+    
+    
+  //   marginBottom: "10px",
+  //   padding: "0px 30px",
+  //   display: "flex",
+  //   justifyContent: "space-between",
+    
+  // },
+  // formControl: {
+  //   margin: theme.spacing(1),
+  //   minWidth: 180
+  // },
   selectEmpty: {
     marginTop: theme.spacing(2)
   },
-  select: {
-    color: "white"
-  },
+ 
+  
+  // logo: {
+  //   display: "flex",
+  //   flexDirection: "column",
+  //   justifyContent: "center",
+  //   alignItems: "center"
+  // },
+  // logeText: {
+  //   fontSize: '0.8rem'
+  // },
+  
+  // menuItem: {
+  //   fontSize: "0.8rem"
+  // },
+  // inputSelectedValue: {
+  //   fontSize: "0.8rem"
+  // }
+  '@global': {
+    '.MuiInput-underline:before': {
+      borderBottom: `1px solid ${theme.palette.primary.contrastText}`
+    },
+    '.MuiInputBase-root': {
+      color: 'inherit'
+    },
+    '.MuiInput-underline:hover:not(.Mui-disabled):before': {
 
-  inputLabel: {
-    color: "white"
-  },
-  logo: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  logeText: {
-    fontSize: '0.8rem'
-  },
-  underline: {
-    "&:hover": {
-      borderBottom: "1px solid white"
+      borderBottom: `2px solid ${theme.palette.primary.contrastText}`
+    
     },
-    "&:before": {
-      borderBottom: "1px solid white"
-    },
-    "&:after": {
-      borderBottom: "1px solid white"
-    }
   },
-  menuItem: {
-    fontSize: "0.8rem"
+  root: {
+    flexGrow: 1,
   },
-  inputSelectedValue: {
-    fontSize: "0.8rem"
-  }
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  title: {
+    flexGrow: 1,
+  },
 });
 
 class Header extends Component {
@@ -99,7 +109,7 @@ class Header extends Component {
       // console.log(curr)
       return (
         <MenuItem
-          color="primary"
+          
           className={classes.menuItem}
           key={curr.code}
           value={curr.code}
@@ -109,30 +119,26 @@ class Header extends Component {
       );
     });
     return (
-      <header className={this.props.classes.root}>
-        <div className={classes.logo}>
-          <FlightIcon fontSize="small" />
-          <p className={classes.logeText}>Fly Away</p>
-        </div>
-
-        <FormControl className={this.props.classes.formControl} color="primary">
+    
+<AppBar position="fixed">
+  <Toolbar>
+    <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+    <FlightIcon fontSize="small" />
+    </IconButton>
+    <Typography variant="h6" className={classes.title}>
+    Fly Away
+    </Typography>
+    <FormControl className={this.props.classes.formControl} >
           <InputLabel
-            color="primary"
+            
             className={this.props.classes.inputLabel}
             id="demo-simple-select-label"
           >
             Display Results In
           </InputLabel>
           <Select
-            color="primary"
-            input={
-              <Input
-                classes={{
-                  underline: classes.underline,
-                  root: classes.inputSelectedValue
-                }}
-              />
-            }
+           
+          color="inherit"
             className={classes.select}
             labelid="demo-simple-select-label"
             id="demo-simple-select"
@@ -142,7 +148,37 @@ class Header extends Component {
             {menuItems}
           </Select>
         </FormControl>
-      </header>
+  </Toolbar>
+</AppBar>
+
+    
+      /* <header className={classes.root}>
+        <div className={classes.logo}>
+          <FlightIcon fontSize="small" />
+          <p className={classes.logeText}>Fly Away</p>
+        </div>
+
+        <FormControl className={this.props.classes.formControl} >
+          <InputLabel
+            
+            className={this.props.classes.inputLabel}
+            id="demo-simple-select-label"
+          >
+            Display Results In
+          </InputLabel>
+          <Select
+           
+           
+            className={classes.select}
+            labelid="demo-simple-select-label"
+            id="demo-simple-select"
+            value={this.state.currency}
+            onChange={this.handleChange}
+          >
+            {menuItems}
+          </Select>
+        </FormControl>
+      </header> */
     );
   }
 }

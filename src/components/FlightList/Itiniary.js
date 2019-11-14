@@ -9,13 +9,14 @@ const styles = theme => ({
   legsContainer: {
     display: "flex",
     flexDirection: "column",
-    textAlign: "center"
+    textAlign: "center",
+  
   },
   top: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    fontSize: '0.7rem',
-    marginBottom: '1rem',
+    display: "flex",
+    justifyContent: "space-between",
+    fontSize: "0.7rem",
+    marginBottom: "1rem"
   }
 });
 
@@ -25,14 +26,22 @@ class Itiniary extends Component {
   }
 
   render() {
-    const { classes, carriers, lowestPrice, outbound, inbound } = this.props;
-    
+    const {
+      classes,
+      carriers,
+      lowestPrice,
+      outbound,
+      inbound,
+      itineraryDetails
+    } = this.props;
+
     return (
       <div className={classes.root}>
         <div className={classes.top}>
           <p className={classes.itiniaryCarriers}>{carriers}</p>
           <p>
-            Starting from: {this.props.data.Currencies[0].Symbol}
+            {itineraryDetails.PricingOptions.length} Deals from:
+            {this.props.data.Currencies[0].Symbol}
             {lowestPrice}
           </p>
         </div>

@@ -11,9 +11,11 @@ import Itiniary from "./Itiniary";
 const styles = theme =>
   console.log(theme) || {
     root: {
+      
+     
       backgroundColor: theme.palette.primary.light,
-      marginBottom: '0.3rem',
-      color: 'black'
+      marginBottom: '0.2rem',
+     
     },
     heading: {
       fontSize: theme.typography.pxToRem(15),
@@ -94,7 +96,7 @@ class FlightListMaterial extends Component {
     
       let carriersInbound = [];
       if (itin.InboundLegId) {
-        console.log("inside if");
+       
         let inboundDetails = this.getDetailsOfLeg(itin.InboundLegId);
         let carriersInbound = inboundDetails.CarriersDetails.map(carrier => {
           return carrier.Name;
@@ -111,10 +113,10 @@ class FlightListMaterial extends Component {
         new Set(carriersInbound.concat(carriersOutbound))
       ).join(", ");
 
-      let lowestPrice = Math.min.apply(
+      let lowestPrice = Math.round(Math.min.apply(
         Math,
-        itin.PricingOptions.map(o => o.Price)
-      );
+        itin.PricingOptions.map(o => o.Price))
+      ).toLocaleString();
 
       return (
         <ExpansionPanel
@@ -154,7 +156,7 @@ class FlightListMaterial extends Component {
       );
     });
 
-    return <div className={classes.rooty}>{itineraries}</div>;
+    return <div className={classes.root}>{itineraries}</div>;
   }
 }
 export default withStyles(styles, { withTheme: true })(FlightListMaterial);

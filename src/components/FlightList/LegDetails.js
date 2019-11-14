@@ -54,7 +54,7 @@ export class LegDetails extends Component {
     const { classes } = this.props;
 
     let segments = this.props.legDetails.SegmentsDetails.map(segment => {
-      console.log(segment);
+     
       let relevantDataDetailes = {
         ...segment,
         Carrier: this.getDetails(segment.Carrier, this.props.data.Carriers),

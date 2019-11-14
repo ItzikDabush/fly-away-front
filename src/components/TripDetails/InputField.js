@@ -2,22 +2,22 @@ import React, { Component } from "react";
 import AsyncSelect from "react-select/async";
 import axios from "axios";
 import { withStyles } from "@material-ui/core/styles";
+import { serverUrl } from "../config";
 
 let options = [];
 const styles = theme => ({
   root: {
-    color: "black",
-    paddingTop: "10px",
     boxShadow: "none",
-    borderColor: 'none'
+    borderColor: "none",
+    width: "50%",
+    transition: "width 2s"
   },
   button: {
     margin: theme.spacing(1)
   },
   input: {
     display: "none"
-  },
-  
+  }
 });
 
 const filterOptions = inputValue => {
@@ -27,7 +27,7 @@ const filterOptions = inputValue => {
 };
 const promiseOptions = inputValue =>
   axios
-    .post("https://fly-a-way.herokuapp.com/getAirport", {
+    .post(`${serverUrl}/getAirport`, {
       data: {
         originByIP: inputValue
       }
@@ -57,6 +57,7 @@ class InputField extends Component {
 
     return (
       <AsyncSelect
+        color="primary"
         classNamePrefix={classes.inside}
         className={classes.root}
         placeholder={this.props.placeholder}

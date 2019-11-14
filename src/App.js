@@ -5,22 +5,18 @@ import FlightListMaterial from "./components/FlightList/FlightListMaterial";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import seedOffers from "./seedOffers"; //delete on live
 import { withStyles } from "@material-ui/core/styles";
-import indigo from "@material-ui/core/colors/indigo";
-import pink from "@material-ui/core/colors/pink";
-import red from "@material-ui/core/colors/red";
 import ContainerPage from "./components/Layout/ContainerPage";
 import Footer from "./components/Layout/Footer";
 import Header from "./components/Layout/Header";
+import {serverUrl} from './components/config'
 
 const theme = createMuiTheme({
   palette: {
-    // primary: {
-    //   // main: "#365954",
-    //   contrastText: "#ffffff"
-    // },
-    secondary: {
-      main: "#27b8a3"
-    }
+    primary: { main: '#64B5F6', contrastText:'#455a64'  },
+
+
+    secondary: { main: '#BBDEFB', contrastText:'#455a64'  }
+  
   }
 });
 const styles = theme => ({
@@ -44,7 +40,7 @@ class App extends Component {
       tripToSearch: {
         oneWay: false
       },
-      resultsForTrip: seedOffers,
+      resultsForTrip: '',
       isFetching: false
     };
 
@@ -52,7 +48,7 @@ class App extends Component {
   }
   // to return on deploment
   componentDidMount() {
-    axios.get("https://fly-a-way.herokuapp.com/").then(response => {
+    axios.get(serverUrl).then(response => {
       console.log(response);
       this.setState({
         sitePrefernces: {
@@ -76,7 +72,7 @@ class App extends Component {
       },
       () => {
         axios
-          .post("https://fly-a-way.herokuapp.com/data", {
+          .post(`${serverUrl}/data`, {
             data: {
               //sitePrefernces
               country: this.state.sitePrefernces.country,
@@ -99,8 +95,11 @@ class App extends Component {
             }
           })
           .then(res => {
-            this.setState({ resultsForTrip: res.data, isFetching: false });
-          });
+            this.setState({ resultsForTrip: res.data , isFetching: false });
+          }).catch(err => {
+            console.log(err);
+            this.setState({errorFetching: true})
+          })
       }
     );
   }
@@ -126,7 +125,7 @@ class App extends Component {
           {this.state.resultsForTrip.Itineraries ? (
             <FlightListMaterial results={this.state.resultsForTrip} />
           ) : (
-            <ContainerPage isFetching={this.state.isFetching} />
+              <ContainerPage isFetching={this.state.isFetching} getOffers={this.getOffers}/>
           )}
           <Footer location={this.state.sitePrefernces.flag} />
         </div>

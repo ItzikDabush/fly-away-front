@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
+import Button from '@material-ui/core/Button';
+
 const styles = theme => ({
   root: {
     width: "100%",
@@ -32,21 +34,22 @@ class BookingList extends Component {
           <div>
             <img src={agent.ImageUrl} alt={agent.Name} />
           </div>
-              <p>{this.props.currency.Symbol}{option.Price.toLocaleString()}</p>
+              <p>{this.props.currency.Symbol}{Math.round(option.Price).toLocaleString()}</p>
           <div>
-            <a href={option.DeeplinkUrl} target="_blank">
-              View Deal
-            </a>
+          <Button href={option.DeeplinkUrl} target="_blank" variant="contained" color="secondary" className={classes.button}>
+View Deal      </Button>
+          
+           
           </div>
         </div>
       );
     });
     return (
         <div className={classes.root}>
-        <div className={classes.top}>
+        {/* <div className={classes.top}>
           <div>Booking site</div>
           <div>Price</div>
-        </div>
+        </div> */}
         <div>{bookingOptions}</div>
       </div>
     );

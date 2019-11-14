@@ -57,7 +57,7 @@ class SegmentDetails extends Component {
       FlightNumber,
       fullLegDetails
     } = this.props;
-    console.log(this.props);
+  
 
     const detailedDestinationStation =
       DestinationStation.Type === "Airport"
@@ -76,7 +76,7 @@ class SegmentDetails extends Component {
     const DurationInHours = this.timeConvert(Duration);
     let layoverInMin;
     let layoverFull;
-    console.log(detailedDestinationStation);
+  
     if (DestinationStation.Id !== fullLegDetails.DestinationStation) {
       layoverInMin = differenceInMinutes(
         new Date(fullLegDetails.SegmentsDetails[1].DepartureDateTime),

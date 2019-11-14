@@ -6,10 +6,10 @@ const styles = theme => ({
   root: {
     background: theme.palette.primary.main,
     border: 0,
-    borderRadius: 3,
+    // borderRadius: 3,
     // boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
     color: "#cccccc",
-    padding: "0 30px",
+    padding: "5px 30px",
     textAlign: "center",
     
     // position: "absolute",
@@ -31,11 +31,11 @@ function Footer(props) {
   return (
     <footer className={classes.root}>
     
-      <a className={classes.links}href="https://www.linkedin.com/in/itzikdabush/" target="_blank">
+      <a className={classes.links}href="https://www.linkedin.com/in/itzikdabush/" target="_blank"  rel="noopener noreferrer">
         <GitHubIcon />
       </a>
 
-      <a className={classes.links} href="https://www.linkedin.com/in/itzikdabush" target="_blank">
+      <a className={classes.links} href="https://www.linkedin.com/in/itzikdabush" target="_blank"  rel="noopener noreferrer">
         <LinkedInIcon />
       </a>
       <p>Made with Fun and Love at Tel-Aviv</p>
