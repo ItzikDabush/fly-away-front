@@ -8,48 +8,109 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import endOfWeek from "date-fns/endOfWeek";
+import format from "date-fns/format";
+import addDays from "date-fns/addDays";
+
 const useStyles = makeStyles({
   card: {
     maxWidth: 345
   },
   media: {
     height: 100
+  },
+  content: {
+    padding:'5px 8px 5px 11px'
+  },
+  actions: {
+    padding:'0 8px 0 6px'
+  },
+  caption: {
+    padding:' 0 16px 5px 12px'
   }
 });
 
 export default function CityCard(props) {
   const classes = useStyles();
 
-  function handleClick(e) {
-    console.log(e);
-    console.log(props);
+  function getDatesForInspirations() {
     let date = new Date();
-    const weekend = endOfWeek(date, { weekStartsOn: 6 }); //hack to get friday
-    props.getOffers(props)
+    let dateDetails = {};
+    const weekendStart = endOfWeek(date, { weekStartsOn: 6 }); //hack to get friday
+    const weekendEnd = addDays(weekendStart, 3);
+    const weekendStartFormated = format(weekendStart, "yyyy-MM-dd");
+    const weekendEndFormated = format(weekendEnd, "yyyy-MM-dd");
+    const outboundDate = format(weekendStart, "eee, MMM d");
+    const inboundDate = format(weekendEnd, "eee, MMM d");
+
+    dateDetails = {
+      weekendStart,
+      weekendStartFormated,
+      weekendEndFormated,
+      weekendEndFormated,
+      outboundDate,
+      inboundDate
+    };
+
+    return dateDetails;
+  }
+
+  const dateDetails = getDatesForInspirations();
+  function handleClick(e) {
+    const tripInspiration = {
+      originPlace: { PlaceId: props.originByIp },
+      destinationPlace: { PlaceId: props.placeId },
+      outboundDate: dateDetails.weekendStartFormated,
+      adults: 1,
+      inboundDate: dateDetails.weekendEndFormated,
+      children: 0,
+      infants: 0,
+      directOnly: false,
+      oneWay: false,
+      sortType: "price"
+    };
+
+    props.getOffers(tripInspiration);
   }
 
   return (
     <Card className={classes.card}>
-      <CardActionArea>
+    
         <CardMedia
           className={classes.media}
           image={props.img}
           title={props.name}
         />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
+
+      <CardContent className={classes.content}>
+          {/* <Typography gutterBottom variant="h5" component="h2">
             {props.name}
+          </Typography> */}
+          <Typography
+            align="left"
+            variant="body2"
+            color="textSecondary"
+            component="p"
+          >
+            {props.name}, {props.country}
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            {props.country}
-          </Typography>
+          
         </CardContent>
-      </CardActionArea>
-      <CardActions onClick={handleClick}>
+      
+      <CardActions onClick={handleClick} className={classes.actions}>
         <Button size="small" color="primary">
-          Next Weekend
+          Fly Next Weekend
         </Button>
       </CardActions>
+      <CardContent className={classes.caption} pb={1}>
+        <Typography
+          align="left"
+          variant="caption"
+          color="textSecondary"
+          component="p"
+        >
+          {dateDetails.outboundDate} - {dateDetails.inboundDate}
+        </Typography>
+      </CardContent>
     </Card>
   );
 }

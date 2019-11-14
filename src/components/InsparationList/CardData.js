@@ -10,36 +10,38 @@ export default [
   {
     name: "Berlin",
     country: "Germany",
-    image: berlin
+    image: berlin,
+    PlaceId: "BERL-sky"
   },
-  {
-    name: "Dubai",
-    country: "Dubai",
-    image: dubai
-  },
+  
   {
     name: "London",
     country: "United Kingdom",
-    image: london
+    image: london,
+    PlaceId: "LOND-sky"
   },
   {
     name: "Madrid",
     country: "Spain",
-    image: madrid
+    image: madrid,
+    PlaceId: "MAD-sky"
   },
   {
     name: "New York",
     country: "United States",
-    image: nyc
+    image: nyc,
+    PlaceId: "NYCA-sky"
   },
   {
     name: "Paris",
     country: "France",
-    image: paris
+    image: paris,
+    PlaceId: "PARI-sky"
   },
   {
     name: "Barcelona",
     country: "Spain",
-    image: barcelona
+    image: barcelona,
+    PlaceId: "BCN-sky"
   }
 ];

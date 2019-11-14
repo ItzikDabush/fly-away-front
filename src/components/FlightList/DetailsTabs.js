@@ -7,12 +7,13 @@ import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import LegDetails from "./LegDetails";
 import Bookinglist from "./BookingList";
+import Divider from "@material-ui/core/Divider";
 
 const styles = theme => ({
   root: {
     width: "100%",
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.paper
+    flexGrow: 1
+    // backgroundColor: theme.palette.secondary.light
   }
 });
 
@@ -75,11 +76,14 @@ export class DetailsTabs extends Component {
           />
 
           {this.props.inbound ? (
-            <LegDetails
-              data={this.props.data}
-              name="Inbound"
-              legDetails={this.props.inbound.inboundDetails}
-            />
+            <>
+              <Divider />
+              <LegDetails
+                data={this.props.data}
+                name="Inbound"
+                legDetails={this.props.inbound.inboundDetails}
+              />
+            </>
           ) : (
             ""
           )}

@@ -1,16 +1,17 @@
 import React, { Component } from "react";
 import LegSummery from "./LegSummery";
 import { withStyles } from "@material-ui/core/styles";
+import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
   root: {
-    width: "100%"
+    width: "100%",
+   
   },
   legsContainer: {
     display: "flex",
     flexDirection: "column",
-    textAlign: "center",
-  
+    textAlign: "center"
   },
   top: {
     display: "flex",

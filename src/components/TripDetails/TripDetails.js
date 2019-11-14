@@ -33,25 +33,27 @@ const styles = theme =>
       border: `1px solid ${theme.palette.secondary.light}`,
       background: theme.palette.secondary.main,
       padding: "10px",
-      borderRadius: "5px"
+      borderRadius: "5px",
+      boxShadow:
+        " 0px 6px 6px -3px rgba(0,0,0,0.2), 0px 10px 14px 1px rgba(0,0,0,0.14), 0px 4px 18px 3px rgba(0,0,0,0.12)"
     },
 
-    button: {
-      margin: theme.spacing(1)
-    },
+    // button: {
+    //   margin: theme.spacing(5)
+    // },
     input: {
       display: "none"
     },
     switch: {
-      marginTop: '10px',
+      marginTop: "10px",
       width: "100%",
       display: "flex",
       justifyContent: "center",
-      fontSize: '0.8rem'
+      fontSize: "0.5rem"
     },
     button: {
       width: "100%",
-      margin: "10px 0"
+      margin: "20px 0"
     },
     containedItzik: {
       boxShadow: "none"
@@ -88,7 +90,6 @@ class TripDetails extends Component {
   //Set the Select inputvalu to be the outboundDate/inboundDate
   // if the identifier id outboundate then set the inbounde date to 5 days ahead - affect on the current value
   handleChoose(chosen, identeifier, newInboundedate) {
-    console.log(chosen, identeifier, newInboundedate);
     this.setState({
       [identeifier]: chosen,
       ...(newInboundedate && { inboundDate: newInboundedate })
@@ -110,6 +111,7 @@ class TripDetails extends Component {
 
   render() {
     const { classes } = this.props;
+
     return (
       <Paper className={classes.root} elevation={10} square>
         <form>
@@ -135,7 +137,7 @@ class TripDetails extends Component {
               <FormControlLabel
                 control={
                   <Switch
-                  size="small"
+                    size="small"
                     color="secondary"
                     checked={this.state.oneWay}
                     onChange={this.handleChange("oneWay")}
@@ -146,9 +148,10 @@ class TripDetails extends Component {
                 label="One Way"
               />
               <FormControlLabel
+                
                 control={
                   <Switch
-                  size="small"
+                    size="small"
                     color="secondary"
                     checked={this.state.directOnly}
                     onChange={this.handleChange("directOnly")}

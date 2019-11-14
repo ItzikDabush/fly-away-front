@@ -6,7 +6,7 @@ const styles = theme => ({
   root: {
     width: "100%",
     flexGrow: 1,
-    backgroundColor: theme.palette.background.paper
+    
   },
   top: {
       display: "flex",
@@ -36,7 +36,7 @@ class BookingList extends Component {
           </div>
               <p>{this.props.currency.Symbol}{Math.round(option.Price).toLocaleString()}</p>
           <div>
-          <Button href={option.DeeplinkUrl} target="_blank" variant="contained" color="secondary" className={classes.button}>
+          <Button href={option.DeeplinkUrl} target="_blank" variant="contained" color="primary" className={classes.button}>
 View Deal      </Button>
           
            

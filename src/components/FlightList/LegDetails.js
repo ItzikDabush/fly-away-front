@@ -1,16 +1,20 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
+import Typography from '@material-ui/core/Typography';
+import Divider from "@material-ui/core/Divider";
 
 import SegmentDetails from "./SegmentDetails";
 const styles = theme => ({
   root: {
     width: "100%",
-    background: theme.palette.background.paper
+    // background: theme.palette.secondary.light,
+    color: 'inherit'
   },
   top: {
     display: "flex",
     justifyContent: "space-between",
-    fontWeight: 600
+    fontWeight: 600,
+    textAlign: 'end',
   },
   col: {
     width: "20%"
@@ -54,7 +58,6 @@ export class LegDetails extends Component {
     const { classes } = this.props;
 
     let segments = this.props.legDetails.SegmentsDetails.map(segment => {
-     
       let relevantDataDetailes = {
         ...segment,
         Carrier: this.getDetails(segment.Carrier, this.props.data.Carriers),
@@ -72,7 +75,14 @@ export class LegDetails extends Component {
         )
       };
 
-      return <SegmentDetails data={this.props.data} key={segment.Id} {...relevantDataDetailes} fullLegDetails={this.props.legDetails}/>;
+      return (
+        <SegmentDetails
+          data={this.props.data}
+          key={segment.Id}
+          {...relevantDataDetailes}
+          fullLegDetails={this.props.legDetails}
+        />
+      );
     });
 
     return (

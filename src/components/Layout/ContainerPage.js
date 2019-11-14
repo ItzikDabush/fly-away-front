@@ -2,13 +2,14 @@ import React from "react";
 import { withStyles, useTheme } from "@material-ui/core/styles";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import DotLoader from "react-spinners/DotLoader";
-import InsparationList from '../InsparationList/InsparationList'
+import InsparationList from "../InsparationList/InsparationList";
 
 const styles = theme => ({
   root: {
     background: theme.palette.primary.main,
     border: 0,
     borderRadius: 3,
+    height: "100%",
     // boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
     color: theme.palette.primary.dark,
 
@@ -16,8 +17,7 @@ const styles = theme => ({
     textAlign: "center",
     // position: "absolute",
     // bottom: "0px",
-    width: "100%",
-    
+    width: "100%"
   },
   loadingContainer: {
     display: "flex",
@@ -31,11 +31,10 @@ const styles = theme => ({
 function ContainerPage(props) {
   const theme = useTheme();
   const { classes, isFetching } = props;
-  console.log(theme);
-
-  const handleOffers = (data) => {
-    props.getOffers(data)
-  }
+ 
+  const handleOffers = data => {
+    props.getOffers(data);
+  };
 
   return (
     <div className={classes.root}>
@@ -50,8 +49,8 @@ function ContainerPage(props) {
           <p>I'm Getting the Details</p>
         </div>
       ) : (
-        <div className={classes.loadingContainer}>
-            <InsparationList getOffers={handleOffers}/>
+        <div >
+          <InsparationList cityByIp={props.cityByIp} getOffers={handleOffers} />
         </div>
       )}
     </div>

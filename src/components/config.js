@@ -1,4 +1,3 @@
-const serverUrl = 'https://fly-a-way.herokuapp.com'
+const serverUrl = "http://localhost:3001";
 
-
-export {serverUrl} ;
+export { serverUrl };

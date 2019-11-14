@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import format from "date-fns/format";
 import differenceInMinutes from "date-fns/differenceInMinutes";
-
+import Divider from "@material-ui/core/Divider";
 const styles = theme => ({
   root: {
     width: "100%",
@@ -24,7 +24,10 @@ const styles = theme => ({
   },
   rightCol: {
     width: "20%",
-    textAlign: "right"
+    textAlign: "right",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between"
   },
   details: {
     width: "100%"
@@ -57,7 +60,6 @@ class SegmentDetails extends Component {
       FlightNumber,
       fullLegDetails
     } = this.props;
-  
 
     const detailedDestinationStation =
       DestinationStation.Type === "Airport"
@@ -76,7 +78,7 @@ class SegmentDetails extends Component {
     const DurationInHours = this.timeConvert(Duration);
     let layoverInMin;
     let layoverFull;
-  
+
     if (DestinationStation.Id !== fullLegDetails.DestinationStation) {
       layoverInMin = differenceInMinutes(
         new Date(fullLegDetails.SegmentsDetails[1].DepartureDateTime),
@@ -107,16 +109,21 @@ class SegmentDetails extends Component {
               {Carrier.Name} {FlightNumber}
             </p>
             {DestinationStation.Id !== fullLegDetails.DestinationStation ? (
-              <p>
-                Layover in {detailedDestinationStation.Name} for {layoverFull}
-              </p>
+              <>
+                <Divider />
+                <p>Layover in {detailedDestinationStation.Name}</p>
+                <Divider />
+              </>
             ) : (
               ""
             )}
             <p></p>
           </div>
         </div>
-        <div className={classes.rightCol}>{DurationInHours}</div>
+        <div className={classes.rightCol}>
+          {DurationInHours}
+          <p>{layoverFull}</p>
+        </div>
       </div>
     );
   }

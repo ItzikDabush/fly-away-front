@@ -62,7 +62,7 @@ class DateComp extends Component {
   }
 
   handleDateChange = (date, other) => {
-    console.log(date, other, this.props.name);
+  
     let newInboundedate = null;
     if (this.props.name === "outboundDate") {
       newInboundedate = format(addDays(date, 5), "yyyy-MM-dd");

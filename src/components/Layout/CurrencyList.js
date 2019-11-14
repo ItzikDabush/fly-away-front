@@ -8,15 +8,16 @@ export default {
         "code": "USD",
         "name_plural": "US dollars"
     },
-    "CAD": {
-        "symbol": "CA$",
-        "name": "Canadian Dollar",
-        "symbol_native": "$",
+    "ILS": {
+        "symbol": "₪",
+        "name": "Israeli New Sheqel",
+        "symbol_native": "₪",
         "decimal_digits": 2,
         "rounding": 0,
-        "code": "CAD",
-        "name_plural": "Canadian dollars"
+        "code": "ILS",
+        "name_plural": "Israeli new sheqels"
     },
+   
     "EUR": {
         "symbol": "€",
         "name": "Euro",
@@ -25,6 +26,15 @@ export default {
         "rounding": 0,
         "code": "EUR",
         "name_plural": "euros"
+    },
+    "CAD": {
+        "symbol": "CA$",
+        "name": "Canadian Dollar",
+        "symbol_native": "$",
+        "decimal_digits": 2,
+        "rounding": 0,
+        "code": "CAD",
+        "name_plural": "Canadian dollars"
     },
     "AED": {
         "symbol": "AED",
@@ -422,15 +432,7 @@ export default {
         "code": "IDR",
         "name_plural": "Indonesian rupiahs"
     },
-    "ILS": {
-        "symbol": "₪",
-        "name": "Israeli New Sheqel",
-        "symbol_native": "₪",
-        "decimal_digits": 2,
-        "rounding": 0,
-        "code": "ILS",
-        "name_plural": "Israeli new sheqels"
-    },
+   
     "INR": {
         "symbol": "Rs",
         "name": "Indian Rupee",

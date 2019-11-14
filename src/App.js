@@ -8,15 +8,13 @@ import { withStyles } from "@material-ui/core/styles";
 import ContainerPage from "./components/Layout/ContainerPage";
 import Footer from "./components/Layout/Footer";
 import Header from "./components/Layout/Header";
-import {serverUrl} from './components/config'
+import { serverUrl } from "./components/config";
 
 const theme = createMuiTheme({
   palette: {
-    primary: { main: '#64B5F6', contrastText:'#455a64'  },
+    primary: { main: "#64B5F6", contrastText: "#455a64" },
 
-
-    secondary: { main: '#BBDEFB', contrastText:'#455a64'  }
-  
+    secondary: { main: "#BBDEFB", contrastText: "#455a64" }
   }
 });
 const styles = theme => ({
@@ -40,7 +38,7 @@ class App extends Component {
       tripToSearch: {
         oneWay: false
       },
-      resultsForTrip: '',
+      resultsForTrip: seedOffers,
       isFetching: false
     };
 
@@ -48,28 +46,43 @@ class App extends Component {
   }
   // to return on deploment
   componentDidMount() {
-    axios.get(serverUrl).then(response => {
-      console.log(response);
-      this.setState({
-        sitePrefernces: {
-          country: response.data.country_code,
-          currency: response.data.currency.code,
-          cityByIp: response.data.region,
-          locale: `en-${response.data.country_code}`,
-          flag: response.data.emoji_flag
-        }
-      });
-    });
+    axios
+      .get("http://ip-api.com/json/")
+      .then(response => {
+        console.log(response);
+        this.setState({
+          sitePrefernces: {
+            ...this.state.sitePrefernces,
+            country: response.data.countryCode,
+            cityByIp: response.data.regionName,
+            locale: `en-${response.data.countryCode}`
+          }
+        });
+      }).then(() => {
+        axios
+          .post(`${serverUrl}/getAirport`, {
+            data: {
+              originByIP: this.state.sitePrefernces.cityByIp
+            }
+          }).then(response => {
+            this.setState({
+              sitePrefernces: {
+                ...this.state.sitePrefernces,
+                cityBySkyscanner: response.data.Places[0].PlaceId,
+              }
+            })
+              
+          }).catch(err => {
+            console.log(err)
+          });
+      })
   }
 
   //Create session with Skyscanner after the Use choose his prefrences
   getOffers(data) {
-    // console.log(data);
+    console.log(data);
     this.setState(
-      { resultsForTrip: '',
-        isFetching: true,
-        tripToSearch: { ...data }
-      },
+      { resultsForTrip: "", isFetching: true, tripToSearch: { ...data } },
       () => {
         axios
           .post(`${serverUrl}/data`, {
@@ -95,37 +108,42 @@ class App extends Component {
             }
           })
           .then(res => {
-            this.setState({ resultsForTrip: res.data , isFetching: false });
-          }).catch(err => {
-            console.log(err);
-            this.setState({errorFetching: true})
+            this.setState({ resultsForTrip: res.data, isFetching: false });
           })
+          .catch(err => {
+            console.log(err);
+            this.setState({ errorFetching: true });
+          });
       }
     );
   }
 
   handleSitePrefernces = prefernces => {
-    console.log(prefernces);
+   
     this.setState({
       sitePrefernces: { ...this.state.sitePrefernces, currency: prefernces }
     });
+   
   };
 
   render() {
-    console.log(this.props);
+   
     const { classes } = this.props;
     return (
       <ThemeProvider theme={theme}>
         <div className={classes.root}>
           <Header sitePrefernces={this.handleSitePrefernces} />
           <TripDetails
-            cityByIp={this.state.sitePrefernces.cityByIp}
             getOffers={this.getOffers}
           />
           {this.state.resultsForTrip.Itineraries ? (
             <FlightListMaterial results={this.state.resultsForTrip} />
           ) : (
-              <ContainerPage isFetching={this.state.isFetching} getOffers={this.getOffers}/>
+            <ContainerPage
+              cityByIp={this.state.sitePrefernces.cityBySkyscanner}
+              isFetching={this.state.isFetching}
+              getOffers={this.getOffers}
+            />
           )}
           <Footer location={this.state.sitePrefernces.flag} />
         </div>
