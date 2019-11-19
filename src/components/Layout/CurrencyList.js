@@ -1,3 +1,6 @@
+//data for the Header component
+
+
 export default {
     "USD": {
         "symbol": "$",

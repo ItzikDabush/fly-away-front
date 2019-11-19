@@ -1,12 +1,10 @@
 import React, { Component } from "react";
 import LegSummery from "./LegSummery";
 import { withStyles } from "@material-ui/core/styles";
-import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
   root: {
-    width: "100%",
-   
+    width: "100%"
   },
   legsContainer: {
     display: "flex",
@@ -17,15 +15,15 @@ const styles = theme => ({
     display: "flex",
     justifyContent: "space-between",
     fontSize: "0.7rem",
-    marginBottom: "1rem"
+    marginBottom: "1rem",
+    fontStyle: "italic",
+    fontWeight: 500
   }
 });
 
-class Itiniary extends Component {
-  constructor(props) {
-    super(props);
-  }
+// refactor ? functional component
 
+class Itiniary extends Component {
   render() {
     const {
       classes,
@@ -33,7 +31,8 @@ class Itiniary extends Component {
       lowestPrice,
       outbound,
       inbound,
-      itineraryDetails
+      itineraryDetails,
+      data
     } = this.props;
 
     return (
@@ -41,9 +40,8 @@ class Itiniary extends Component {
         <div className={classes.top}>
           <p className={classes.itiniaryCarriers}>{carriers}</p>
           <p>
-            {itineraryDetails.PricingOptions.length} Deals from:
-            {this.props.data.Currencies[0].Symbol}
-            {lowestPrice}
+            {itineraryDetails.PricingOptions.length} Deals from{" "}
+            {data.Currencies[0].Symbol} {lowestPrice}
           </p>
         </div>
         <div className={classes.legsContainer}>

@@ -3,7 +3,7 @@ import { withStyles } from "@material-ui/core/styles";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
-import Divider from '@material-ui/core/Divider';
+import Divider from "@material-ui/core/Divider";
 
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import DetailsTabs from "./DetailsTabs";
@@ -12,10 +12,13 @@ import Itiniary from "./Itiniary";
 const styles = theme =>
   console.log(theme) || {
     root: {
-      backgroundColor: 'white',
-     color: theme.palette.secondary.contrastText
-     
+      backgroundColor: "white",
+      color: theme.palette.secondary.contrastText
     },
+    expandIcon: {
+      backgroundColor: theme.palette.primary.dark,
+      borderRadius: '50%'
+    }
     // heading: {
     //   fontSize: theme.typography.pxToRem(15),
     //   flexBasis: "100%",
@@ -40,8 +43,7 @@ class FlightListMaterial extends Component {
   }
 
   getDetailsOfLeg(legId) {
-
-    const { Legs, Carriers, Places, Segments, Agents } = this.props.results;
+    const { Legs, Carriers, Places, Segments } = this.props.results;
     let LegDetails = this.getDetails(legId, Legs);
 
     LegDetails.CarriersDetails = LegDetails.Carriers.map(id => {
@@ -85,36 +87,37 @@ class FlightListMaterial extends Component {
       let carriersOutbound = outboundDetails.CarriersDetails.map(carrier => {
         return carrier.Name;
       });
-
       let outbound = {
         outboundDetails: outboundDetails,
         carriersOutbound: carriersOutbound
       };
 
       let inbound = null;
-    
+
       let carriersInbound = [];
       if (itin.InboundLegId) {
-       
         let inboundDetails = this.getDetailsOfLeg(itin.InboundLegId);
-        let carriersInbound = inboundDetails.CarriersDetails.map(carrier => {
+        carriersInbound = inboundDetails.CarriersDetails.map(carrier => {
           return carrier.Name;
         });
+        console.log(carriersInbound);
 
         inbound = {
           inboundDetails: inboundDetails,
           carriersInbound: carriersInbound
         };
       }
-    
 
       let carriers = Array.from(
         new Set(carriersInbound.concat(carriersOutbound))
       ).join(", ");
+      console.log(carriers);
 
-      let lowestPrice = Math.round(Math.min.apply(
-        Math,
-        itin.PricingOptions.map(o => o.Price))
+      let lowestPrice = Math.round(
+        Math.min.apply(
+          Math,
+          itin.PricingOptions.map(o => o.Price)
+        )
       ).toLocaleString();
 
       return (
@@ -128,7 +131,7 @@ class FlightListMaterial extends Component {
         >
           <ExpansionPanelSummary
             className={classes.expansionPanelSummary}
-            expandIcon={<ExpandMoreIcon />}
+            expandIcon={<ExpandMoreIcon color='primary' className={classes.expandIcon}/>}
             aria-controls={`panel${index}bh-content`}
             id={`panel${index}bh-header`}
           >
@@ -141,7 +144,7 @@ class FlightListMaterial extends Component {
               data={this.props.results}
             />
           </ExpansionPanelSummary>
-          <Divider/>
+          <Divider />
           <ExpansionPanelDetails className={classes.expansionPanelDetails}>
             <DetailsTabs
               carriers={carriers}

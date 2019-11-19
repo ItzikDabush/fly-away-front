@@ -1,6 +1,5 @@
 import React from "react";
 import { withStyles, useTheme } from "@material-ui/core/styles";
-import LinearProgress from "@material-ui/core/LinearProgress";
 import DotLoader from "react-spinners/DotLoader";
 import InsparationList from "../InsparationList/InsparationList";
 
@@ -30,7 +29,7 @@ const styles = theme => ({
 
 function ContainerPage(props) {
   const theme = useTheme();
-  const { classes, isFetching } = props;
+  const { classes, isFetching, cityByIp } = props;
  
   const handleOffers = data => {
     props.getOffers(data);
@@ -50,7 +49,7 @@ function ContainerPage(props) {
         </div>
       ) : (
         <div >
-          <InsparationList cityByIp={props.cityByIp} getOffers={handleOffers} />
+          <InsparationList cityByIp={cityByIp} getOffers={handleOffers} />
         </div>
       )}
     </div>

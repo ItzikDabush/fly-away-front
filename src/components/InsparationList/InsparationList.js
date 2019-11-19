@@ -18,16 +18,15 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function CityList(props) {
+function CityList(props) {
   const classes = useStyles();
 
   const handleOffers = data => {
-    
     props.getOffers(data);
   };
   const cards = cityData.map(item => {
     return (
-      <Grid key={item.name} item xs={6} sm={5}>
+      <Grid key={item.name} item xs={6} sm={6} md={4}>
         <CityCard
           originByIp={props.cityByIp}
           getOffers={handleOffers}
@@ -41,8 +40,16 @@ export default function CityList(props) {
   });
 
   return (
-    <Grid container className={classes.root} spacing={2}>
+    <Grid
+      container
+      className={classes.root}
+      spacing={2}
+      justify="space-around"
+      alignItems="center"
+    >
       {cards}
     </Grid>
   );
 }
+
+export default CityList;

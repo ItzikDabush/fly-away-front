@@ -1,5 +1,5 @@
+
 import berlin from "../../images/berlin.jpg";
-import dubai from "../../images/dubai.jpg";
 import london from "../../images/london.jpg";
 import madrid from "../../images/madrid.jpg";
 import nyc from "../../images/nyc.jpg";

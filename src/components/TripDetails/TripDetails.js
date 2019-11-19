@@ -12,6 +12,8 @@ import Button from "@material-ui/core/Button";
 import InputField from "./InputField";
 import DateComp from "./DateComp";
 import Paper from "@material-ui/core/Paper";
+import sizes from '../sizes'
+
 
 const styles = theme =>
   console.log(theme) || {
@@ -22,7 +24,7 @@ const styles = theme =>
       // boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
       color: theme.palette.primary.contrastText,
       zIndex: 100,
-      padding: "20px 30px",
+      padding: "30px 30px",
       marginTop: "50px"
     },
 
@@ -34,13 +36,9 @@ const styles = theme =>
       background: theme.palette.secondary.main,
       padding: "10px",
       borderRadius: "5px",
-      boxShadow:
-        " 0px 6px 6px -3px rgba(0,0,0,0.2), 0px 10px 14px 1px rgba(0,0,0,0.14), 0px 4px 18px 3px rgba(0,0,0,0.12)"
+     
     },
 
-    // button: {
-    //   margin: theme.spacing(5)
-    // },
     input: {
       display: "none"
     },
@@ -49,22 +47,34 @@ const styles = theme =>
       width: "100%",
       display: "flex",
       justifyContent: "center",
-      fontSize: "0.5rem"
+      fontSize: "0.5rem",
+      [sizes.minWidth("sm")]: {
+       order: 5
+        
+      }
     },
     button: {
       width: "100%",
-      margin: "20px 0"
+      margin: "25px 0 0 0",
+      [sizes.minWidth("md")]: {
+        width: "15%",
+        margin: '35px 0 10px 0',
+
+      }
     },
-    containedItzik: {
-      boxShadow: "none"
+    form: {
+      [sizes.minWidth("md")]: {
+        display: "flex",
+        flexWrap: 'wrap',
+        justifyContent: 'space-between',
+      }
     },
-    expend: {
-      display: "initial",
-      transition: "display 2s"
-    },
-    notExpend: {
-      display: "none",
-      transition: "display 2s"
+    inputsContainer: {
+      [sizes.minWidth("md")]: {
+        width: '40%',
+     
+        
+      }
     }
   };
 
@@ -76,7 +86,7 @@ class TripDetails extends Component {
       destinationPlace: null,
       outboundDate: format(new Date(), "yyyy-MM-dd"),
       adults: 1,
-      inboundDate: format(addDays(new Date(), 5), "yyyy-MM-dd"),
+      inboundDate: format(addDays(new Date(), 5), "yyyy-MM-dd"), //default 5 days trip unless the user change it,
       children: 0,
       infants: 0,
       directOnly: false,
@@ -87,7 +97,7 @@ class TripDetails extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  //Set the Select inputvalu to be the outboundDate/inboundDate
+  //Set the Select inputv alue to be the outboundDate/inboundDate
   // if the identifier id outboundate then set the inbounde date to 5 days ahead - affect on the current value
   handleChoose(chosen, identeifier, newInboundedate) {
     this.setState({
@@ -98,10 +108,10 @@ class TripDetails extends Component {
 
   handleClick(e) {
     e.preventDefault();
-
     this.props.getOffers(this.state);
   }
 
+  //responsible for controling the input field of the origins/destination
   handleChange = name => event => {
     this.setState({
       ...this.state,
@@ -111,60 +121,66 @@ class TripDetails extends Component {
 
   render() {
     const { classes } = this.props;
+    const {
+      originPlace,
+      destinationPlace,
+      outboundDate,
+      inboundDate,
+      oneWay,
+      directOnly
+    } = this.state;
 
     return (
-      <Paper className={classes.root} elevation={10} square>
-        <form>
-          <Typography variant="caption" display="block" gutterBottom>
-            From
-          </Typography>
-          <div className={classes.DateAndDestinationContainer}>
-            <InputField
-              autoFocus={"true"}
-              handleCityChoose={this.handleChoose}
-              placeholder="From"
-              name="originPlace"
-            />
-
-            <DateComp
-              name="outboundDate"
-              handleChoose={this.handleChoose}
-              label="Depart"
-            />
-          </div>
-          <div>
-            <div className={classes.switch}>
-              <FormControlLabel
-                control={
-                  <Switch
-                    size="small"
-                    color="secondary"
-                    checked={this.state.oneWay}
-                    onChange={this.handleChange("oneWay")}
-                    value="oneWay"
-                    inputProps={{ "aria-label": "secondary checkbox" }}
-                  />
-                }
-                label="One Way"
+      <Paper className={classes.root} elevation={5} square>
+        <form className={classes.form}>
+          <div className={classes.inputsContainer}>
+            <Typography variant="caption" display="block" gutterBottom>
+              From
+            </Typography>
+            <div className={classes.DateAndDestinationContainer}>
+              <InputField
+                autoFocus={"true"}
+                handleCityChoose={this.handleChoose}
+                placeholder="From"
+                name="originPlace"
               />
-              <FormControlLabel
-                
-                control={
-                  <Switch
-                    size="small"
-                    color="secondary"
-                    checked={this.state.directOnly}
-                    onChange={this.handleChange("directOnly")}
-                    value="directOnly"
-                    inputProps={{ "aria-label": "secondary checkbox" }}
-                  />
-                }
-                label="Direct Only"
+
+              <DateComp
+                name="outboundDate"
+                handleChoose={this.handleChoose}
+                label="Depart"
               />
             </div>
           </div>
-
-          <div>
+          <div className={classes.switch}>
+            <FormControlLabel
+              control={
+                <Switch
+                  size="small"
+                  color="secondary"
+                  checked={oneWay}
+                  onChange={this.handleChange("oneWay")}
+                  value="oneWay"
+                  inputProps={{ "aria-label": "secondary checkbox" }}
+                />
+              }
+              label="One Way"
+            />
+            <FormControlLabel
+              control={
+                <Switch
+                  size="small"
+                  color="secondary"
+                  checked={directOnly}
+                  onChange={this.handleChange("directOnly")}
+                  value="directOnly"
+                  inputProps={{ "aria-label": "secondary checkbox" }}
+                />
+              }
+              label="Direct Only"
+            />
+          </div>
+          <div className={classes.inputsContainer}>
             <Typography variant="caption" display="block" gutterBottom>
               To
             </Typography>
@@ -173,31 +189,23 @@ class TripDetails extends Component {
                 handleCityChoose={this.handleChoose}
                 placeholder="To"
                 name="destinationPlace"
-                isExpend={this.state.oneWay}
+                isExpend={oneWay}
               />
               <DateComp
-                notExpend={this.state.oneWay}
+                notExpend={oneWay}
                 name="inboundDate"
                 handleChoose={this.handleChoose}
                 label="Return"
-                initialDate={this.state.inboundDate}
-                minDate={this.state.outboundDate}
+                initialDate={inboundDate}
+                minDate={outboundDate}
               />
             </div>
           </div>
 
           <Button
-            disabled={
-              this.state.originPlace && this.state.destinationPlace
-                ? false
-                : true
-            }
+            disabled={originPlace && destinationPlace ? false : true}
             color="primary"
             variant="contained"
-            classes={{
-              // class name, e.g. `classes-nesting-root-x`
-              contained: classes.containedItzik // class name, e.g. `classes-nesting-label-x`
-            }}
             className={classes.button}
             onClick={this.handleClick}
           >

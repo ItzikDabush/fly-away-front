@@ -1,26 +1,30 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
-import Typography from '@material-ui/core/Typography';
-import Divider from "@material-ui/core/Divider";
-
 import SegmentDetails from "./SegmentDetails";
+
+
 const styles = theme => ({
   root: {
     width: "100%",
     // background: theme.palette.secondary.light,
-    color: 'inherit'
+    color: 'inherit',
+    fontSize: '0.8rem',
   },
   top: {
     display: "flex",
     justifyContent: "space-between",
     fontWeight: 600,
     textAlign: 'end',
+    marginBottom: '10px',
   },
   col: {
     width: "20%"
   },
   duration: {
     textAlign: "right"
+  },
+  segments: {
+    fontSize: '0.7rem'
   }
 });
 
@@ -32,7 +36,7 @@ export class LegDetails extends Component {
   }
 
   getDetails(id, detailsOf) {
-    // console.log(detailsOf)
+
     return detailsOf.find(detailedElement => detailedElement.Id === id);
   }
 
@@ -46,7 +50,6 @@ export class LegDetails extends Component {
   }
 
   render() {
-    const { name } = this.props;
     let {
       Directionality,
       OriginStationDetails,
@@ -54,7 +57,7 @@ export class LegDetails extends Component {
       Duration
     } = this.props.legDetails;
 
-    Duration = this.timeConvert(Duration);
+    let newDuration = this.timeConvert(Duration);
     const { classes } = this.props;
 
     let segments = this.props.legDetails.SegmentsDetails.map(segment => {
@@ -94,9 +97,9 @@ export class LegDetails extends Component {
           <div className={`${classes.col} ${classes.destinations}`}>
             {OriginStationDetails.Code} - {DestinationStationDetails.Code}
           </div>
-          <div className={`${classes.col} ${classes.duration}`}>{Duration}</div>
+          <div className={`${classes.col} ${classes.duration}`}>{newDuration}</div>
         </div>
-        <div>{segments}</div>
+        <div className={classes.segments}>{segments}</div>
       </div>
     );
   }

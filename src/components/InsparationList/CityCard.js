@@ -1,7 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
@@ -13,26 +12,27 @@ import addDays from "date-fns/addDays";
 
 const useStyles = makeStyles({
   card: {
-    maxWidth: 345
+    maxWidth: '100%'
   },
   media: {
     height: 100
   },
   content: {
-    padding:'5px 8px 5px 11px'
+    padding: "5px 8px 5px 11px"
   },
   actions: {
-    padding:'0 8px 0 6px'
+    padding: "0 8px 0 6px"
   },
   caption: {
-    padding:' 0 16px 5px 12px'
+    padding: " 0 16px 5px 12px"
   }
 });
 
-export default function CityCard(props) {
+function CityCard({ placeId, originByIp, name, img, country, getOffers }) {
   const classes = useStyles();
 
   function getDatesForInspirations() {
+    // Refactor ? maybe an outside function? class?
     let date = new Date();
     let dateDetails = {};
     const weekendStart = endOfWeek(date, { weekStartsOn: 6 }); //hack to get friday
@@ -46,19 +46,17 @@ export default function CityCard(props) {
       weekendStart,
       weekendStartFormated,
       weekendEndFormated,
-      weekendEndFormated,
       outboundDate,
       inboundDate
     };
-
     return dateDetails;
   }
 
   const dateDetails = getDatesForInspirations();
   function handleClick(e) {
     const tripInspiration = {
-      originPlace: { PlaceId: props.originByIp },
-      destinationPlace: { PlaceId: props.placeId },
+      originPlace: { PlaceId: originByIp },
+      destinationPlace: { PlaceId: placeId },
       outboundDate: dateDetails.weekendStartFormated,
       adults: 1,
       inboundDate: dateDetails.weekendEndFormated,
@@ -69,33 +67,23 @@ export default function CityCard(props) {
       sortType: "price"
     };
 
-    props.getOffers(tripInspiration);
+    getOffers(tripInspiration);
   }
 
   return (
     <Card className={classes.card}>
-    
-        <CardMedia
-          className={classes.media}
-          image={props.img}
-          title={props.name}
-        />
-
+      <CardMedia className={classes.media} image={img} title={name} />
       <CardContent className={classes.content}>
-          {/* <Typography gutterBottom variant="h5" component="h2">
-            {props.name}
-          </Typography> */}
-          <Typography
-            align="left"
-            variant="body2"
-            color="textSecondary"
-            component="p"
-          >
-            {props.name}, {props.country}
-          </Typography>
-          
-        </CardContent>
-      
+        <Typography
+          align="left"
+          variant="body2"
+          color="textSecondary"
+          component="p"
+        >
+          {name}, {country}
+        </Typography>
+      </CardContent>
+
       <CardActions onClick={handleClick} className={classes.actions}>
         <Button size="small" color="primary">
           Fly Next Weekend
@@ -114,3 +102,5 @@ export default function CityCard(props) {
     </Card>
   );
 }
+
+export default CityCard;

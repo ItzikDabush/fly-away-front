@@ -3,20 +3,23 @@ import axios from "axios";
 import TripDetails from "./components/TripDetails/TripDetails";
 import FlightListMaterial from "./components/FlightList/FlightListMaterial";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import seedOffers from "./seedOffers"; //delete on live
+import seedOffers from "./seedOffers"; //delete on production
 import { withStyles } from "@material-ui/core/styles";
 import ContainerPage from "./components/Layout/ContainerPage";
 import Footer from "./components/Layout/Footer";
 import Header from "./components/Layout/Header";
 import { serverUrl } from "./components/config";
 
+
+
+//defing a theme for the app
 const theme = createMuiTheme({
   palette: {
     primary: { main: "#64B5F6", contrastText: "#455a64" },
-
     secondary: { main: "#BBDEFB", contrastText: "#455a64" }
   }
 });
+
 const styles = theme => ({
   root: {
     width: "100%",
@@ -27,13 +30,15 @@ const styles = theme => ({
   }
 });
 
+
 class App extends Component {
   constructor(props) {
     super(props);
+    //the main state of the application is centrelized here 
     this.state = {
       sitePrefernces: {
         country: "IL",
-        currency: "USD"
+        
       },
       tripToSearch: {
         oneWay: false
@@ -44,13 +49,16 @@ class App extends Component {
 
     this.getOffers = this.getOffers.bind(this);
   }
-  // to return on deploment
+
+  
   componentDidMount() {
+  //fetching the user location 
     axios
       .get("http://ip-api.com/json/")
       .then(response => {
         console.log(response);
         this.setState({
+          //get location data of the user
           sitePrefernces: {
             ...this.state.sitePrefernces,
             country: response.data.countryCode,
@@ -61,6 +69,7 @@ class App extends Component {
       }).then(() => {
         axios
           .post(`${serverUrl}/getAirport`, {
+            //get relevant airport from skyscanner
             data: {
               originByIP: this.state.sitePrefernces.cityByIp
             }
@@ -73,18 +82,19 @@ class App extends Component {
             })
               
           }).catch(err => {
+            this.setState({ errorFetching: true,  isFetching: false })
             console.log(err)
           });
       })
   }
 
-  //Create session with Skyscanner after the Use choose his prefrences
+  
   getOffers(data) {
     console.log(data);
     this.setState(
-      { resultsForTrip: "", isFetching: true, tripToSearch: { ...data } },
+      { resultsForTrip: "", isFetching: true, tripToSearch: { ...data } }, //refactor? send the data object insted of the the state?.
       () => {
-        axios
+        axios //
           .post(`${serverUrl}/data`, {
             data: {
               //sitePrefernces
@@ -112,40 +122,41 @@ class App extends Component {
           })
           .catch(err => {
             console.log(err);
-            this.setState({ errorFetching: true });
+            this.setState({ errorFetching: true,  isFetching: false });
           });
       }
     );
   }
 
-  handleSitePrefernces = prefernces => {
-   
+  handleCurrencyChange = currency => {
     this.setState({
-      sitePrefernces: { ...this.state.sitePrefernces, currency: prefernces }
+      sitePrefernces: { ...this.state.sitePrefernces, currency: currency }
     });
    
   };
 
   render() {
-   
     const { classes } = this.props;
+    const { sitePrefernces, resultsForTrip, isFetching } = this.state;
+    
     return (
       <ThemeProvider theme={theme}>
         <div className={classes.root}>
-          <Header sitePrefernces={this.handleSitePrefernces} />
+          <Header handleCurrencyChange={this.handleCurrencyChange} />
           <TripDetails
             getOffers={this.getOffers}
           />
-          {this.state.resultsForTrip.Itineraries ? (
-            <FlightListMaterial results={this.state.resultsForTrip} />
+          {/* // refactor  -  indicate that there are no itineries for the trip [such case is identified as "this.state.resultsForTrip.Itineraries" will be equal to an empty array */}
+          {resultsForTrip.Itineraries ? (
+            <FlightListMaterial results={resultsForTrip} />
           ) : (
             <ContainerPage
-              cityByIp={this.state.sitePrefernces.cityBySkyscanner}
-              isFetching={this.state.isFetching}
+              cityByIp={sitePrefernces.cityBySkyscanner}
+              isFetching={isFetching}
               getOffers={this.getOffers}
             />
           )}
-          <Footer location={this.state.sitePrefernces.flag} />
+          <Footer />
         </div>
       </ThemeProvider>
     );

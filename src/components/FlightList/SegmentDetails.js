@@ -3,6 +3,7 @@ import { withStyles } from "@material-ui/core/styles";
 import format from "date-fns/format";
 import differenceInMinutes from "date-fns/differenceInMinutes";
 import Divider from "@material-ui/core/Divider";
+
 const styles = theme => ({
   root: {
     width: "100%",
@@ -20,22 +21,29 @@ const styles = theme => ({
     width: "40px",
     "& img": {
       maxWidth: "100%"
-    }
+    },
+    marginLeft: '10px',
   },
   rightCol: {
     width: "20%",
     textAlign: "right",
     display: "flex",
     flexDirection: "column",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    margin: '10px 0',
   },
   details: {
     width: "100%"
+  },
+  divider: {
+    margin: '5px 0',
   }
 });
 
+// refactor?  to functional comopnent
 class SegmentDetails extends Component {
   timeConvert(n) {
+    //function to convert time duration of a flight in a total minutes to hh mm
     let num = n;
     let hours = num / 60;
     let rhours = Math.floor(hours);
@@ -43,8 +51,8 @@ class SegmentDetails extends Component {
     let rminutes = Math.round(minutes);
     return `${rhours}h ${rminutes}m`;
   }
+
   getDetails(id, detailsOf) {
-    // console.log(detailsOf)
     return detailsOf.find(detailedElement => detailedElement.Id === id);
   }
   render() {
@@ -55,7 +63,6 @@ class SegmentDetails extends Component {
       DepartureDateTime,
       ArrivalDateTime,
       Carrier,
-      OperatingCarrier,
       Duration,
       FlightNumber,
       fullLegDetails
@@ -78,13 +85,16 @@ class SegmentDetails extends Component {
     const DurationInHours = this.timeConvert(Duration);
     let layoverInMin;
     let layoverFull;
+    console.log(this.props);
 
+    // to fix the bug with 2 or more layovers
     if (DestinationStation.Id !== fullLegDetails.DestinationStation) {
       layoverInMin = differenceInMinutes(
         new Date(fullLegDetails.SegmentsDetails[1].DepartureDateTime),
         new Date(fullLegDetails.SegmentsDetails[0].ArrivalDateTime)
       );
       layoverFull = this.timeConvert(layoverInMin);
+      console.log(layoverFull);
     }
 
     return (
@@ -110,9 +120,9 @@ class SegmentDetails extends Component {
             </p>
             {DestinationStation.Id !== fullLegDetails.DestinationStation ? (
               <>
-                <Divider />
+                <Divider className={classes.divider}/>
                 <p>Layover in {detailedDestinationStation.Name}</p>
-                <Divider />
+                <Divider className={classes.divider}/>
               </>
             ) : (
               ""

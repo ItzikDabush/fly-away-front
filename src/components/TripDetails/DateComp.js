@@ -1,15 +1,14 @@
 import "date-fns";
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
-import sizes from "../sizes";
-import DateFnsUtils from "@date-io/date-fns";
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker
 } from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
 import addDays from "date-fns/addDays";
 import format from "date-fns/format";
-import Input from "@material-ui/core/Input";
+import sizes from "../sizes";
 
 const styles = theme => ({
   root: {
@@ -25,7 +24,7 @@ const styles = theme => ({
     display: "none",
     [sizes.minWidth("md")]: {
       display: "initial",
-      width: "100%"
+      width: "40%"
     }
   },
   datePickerDialogMine: {
@@ -45,74 +44,66 @@ const styles = theme => ({
     },
     ".MuiInput-underline:hover:not(.Mui-disabled):before": {
       borderBottom: `2px solid ${theme.palette.primary.contrastText}`
+    },
+    '.MuiIconButton-root': {
+      padding: 0
     }
-  },
-  all: {}
+  }
 });
 
 class DateComp extends Component {
   constructor(props) {
     super(props);
     this.state = { selectedDate: new Date() };
-    this.setSelectedDate = this.setSelectedDate.bind(this);
   }
 
-  setSelectedDate(date) {
+  setSelectedDate = date => {
     this.setState({ selectedDate: date });
-  }
+  };
 
-  handleDateChange = (date, other) => {
-  
+  handleDateChange = (fullDate, formatedDate) => {
     let newInboundedate = null;
     if (this.props.name === "outboundDate") {
-      newInboundedate = format(addDays(date, 5), "yyyy-MM-dd");
+      newInboundedate = format(addDays(fullDate, 5), "yyyy-MM-dd");
     }
-    this.setSelectedDate(date);
-    this.props.handleChoose(other, this.props.name, newInboundedate);
+    this.setSelectedDate(fullDate);
+    this.props.handleChoose(formatedDate, this.props.name, newInboundedate);
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, notExpend, minDate, initialDate } = this.props;
 
     return (
       <MuiPickersUtilsProvider utils={DateFnsUtils} className={classes.all}>
-        {/* <KeyboardDatePicker
+        <KeyboardDatePicker
           disablePast
           className={classes.datePickerInline}
           autoOk
           disableToolbar
+          disabled={notExpend}
           variant="inline"
-          margin="normal"
           id="date-picker-inline"
-          label={this.props.label}
           format="yyyy-MM-dd"
-          value={this.state.selectedDate}
+          value={initialDate || this.state.selectedDate}
           onChange={this.handleDateChange}
           KeyboardButtonProps={{
             "aria-label": "change date"
           }}
-          initialFocusedDate={this.props.initialFocusedDate}
+          
           onAccept={e => {
             console.log(e);
           }}
-        /> */}
+        />
         <KeyboardDatePicker
           className={classes.datePickerDialogMine}
-          input={
-            <Input
-              classes={{
-                underline: classes.underline
-              }}
-            />
-          }
           color="primary"
-          disabled={this.props.notExpend}
+          disabled={notExpend}
           disablePast
-          minDate={this.props.minDate && this.props.minDate}
+          minDate={minDate}
           autoOk
           id="date-picker-dialog"
           format="yyyy-MM-dd"
-          value={this.props.initialDate || this.state.selectedDate}
+          value={initialDate || this.state.selectedDate}
           onChange={this.handleDateChange}
           KeyboardButtonProps={{
             "aria-label": "change date"
@@ -122,4 +113,4 @@ class DateComp extends Component {
     );
   }
 }
-export default withStyles(styles)(DateComp);
+export default withStyles(styles, { withTheme: true })(DateComp);

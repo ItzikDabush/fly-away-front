@@ -1,19 +1,17 @@
 import React, { Component } from "react";
-import { withStyles } from "@material-ui/core/styles";
-import sizes from "../sizes";
-import axios from "axios";
 import format from "date-fns/format";
+import { withStyles } from "@material-ui/core/styles";
+import Tooltip from "@material-ui/core/Tooltip";
 
 const styles = theme => ({
   root: {
     display: "flex",
     justifyContent: "space-between",
+    alignItems: "center",
     marginBottom: "10px",
     fontSize: "12px"
   },
   imgCarrier: {
-    display: "flex",
-
     width: "15%",
     "& img": {
       maxWidth: "100%"
@@ -30,9 +28,17 @@ const styles = theme => ({
   },
   stops: {
     display: "flex",
-    justifyContent: "space-around",
-    position: "relative",
-    top: "-11px"
+    justifyContent: "space-around"
+  },
+  time: {
+    fontWeight: 700
+  },
+  dot: {
+    fontSize: "20px",
+    marginTop: "-19px"
+  },
+  direct: {
+    color: theme.palette.primary.main
   }
 });
 
@@ -71,17 +77,20 @@ class LegSummery extends Component {
       StopsDetails === "Direct" ? (
         <>
           <hr></hr>
-          <span>{StopsDetails}</span>
+          <span className={classes.direct}>{StopsDetails}</span>
         </>
       ) : (
         <>
           <hr></hr>
+
           <div className={classes.stops}>
             {StopsDetails.map(stop => (
-              <div key={stop.Code}>
-                <p>*</p>
-                {stop.Code}{" "}
-              </div>
+              <Tooltip title={`Layover in ${stop.Name}`} placement="bottom" key={stop.Code}>
+                <div>
+                  <p className={classes.dot}>•</p>
+                  {stop.Code}{" "}
+                </div>
+              </Tooltip>
             ))}
           </div>
         </>
@@ -102,7 +111,7 @@ class LegSummery extends Component {
       <div className={classes.root}>
         <div className={classes.imgCarrier}>{carriersImages}</div>
         <div className={classes.legDeatils}>
-          <p className="time">{DepartureTime}</p>
+          <p className={classes.time}>{DepartureTime}</p>
           <p className="station-iata">{OriginStationDetails.Code}</p>
           <p className="bottom station-name">{OriginStationDetails.Name}</p>
         </div>
@@ -112,7 +121,7 @@ class LegSummery extends Component {
           <div>{stops}</div>
         </div>
         <div className={classes.legDeatils}>
-          <p className="time">{ArrivalTime}</p>
+          <p className={classes.time}>{ArrivalTime}</p>
           <p className="station-iata">{DestinationStationDetails.Code}</p>
           <p className="bottom station-name">
             {DestinationStationDetails.Name}
