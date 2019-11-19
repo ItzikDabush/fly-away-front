@@ -5,12 +5,11 @@ import InsparationList from "../InsparationList/InsparationList";
 
 const styles = theme => ({
   root: {
-    background: theme.palette.primary.main,
+    background: theme.palette.primary.light,
     border: 0,
-    borderRadius: 3,
     height: "100%",
     color: theme.palette.primary.dark,
-    padding: "0 30px",
+    padding: "30px 30px",
     textAlign: "center",
     width: "100%"
   },

@@ -39,7 +39,7 @@ class App extends Component {
       tripToSearch: {
         oneWay: false
       },
-      resultsForTrip: seedOffers,
+      resultsForTrip: '',
       isFetching: false
     };
 
@@ -85,6 +85,9 @@ class App extends Component {
       });
   }
 
+
+
+
   getOffers(data) {
     console.log(data);
     this.setState(
@@ -112,7 +115,8 @@ class App extends Component {
               ...(this.state.tripToSearch.directOnly ? { stops: 0 } : {})
             }
           })
-          .then(res => {
+          .then( res => {
+            console.log()
             this.setState({ resultsForTrip: res.data, isFetching: false });
           })
           .catch(err => {

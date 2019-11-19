@@ -13,6 +13,9 @@ const styles = theme => ({
   root: {
     width: "100%",
     flexGrow: 1
+  },
+  divider: {
+    margin: '10px 0'
   }
 });
 
@@ -74,7 +77,7 @@ class DetailsTabs extends Component {
           />
           {inbound ? (
             <>
-              <Divider />
+              <Divider className={classes.divider}/>
               <LegDetails
                 data={data}
                 name="Inbound"

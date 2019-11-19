@@ -1,6 +1,7 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
+import Divider from "@material-ui/core/Divider";
 
 const styles = theme => ({
   root: {
@@ -14,33 +15,40 @@ const styles = theme => ({
   optionContainer: {
     display: "flex",
     justifyContent: "space-between",
-    alignItems: "center"
+    alignItems: "center",
+    "& img": {
+      width: "60px",
+      margin: '12px 0'
+    }
   }
 });
 
 const BookingList = ({ classes, agents, bookingDetails, currency }) => {
-  let bookingOptions = bookingDetails.map(option => {
+  let bookingOptions = bookingDetails.map((option, index, arr) => {
     let agent = agents.find(agent => agent.Id === option.Agents[0]);
     return (
-      <div className={classes.optionContainer} key={option.DeeplinkUrl}>
-        <div>
-          <img src={agent.ImageUrl} alt={agent.Name} />
+      <div key={option.DeeplinkUrl}>
+        <div className={classes.optionContainer} >
+          <div>
+            <img src={agent.ImageUrl} alt={agent.Name} />
+          </div>
+          <p>
+            {currency.Symbol}
+            {Math.round(option.Price).toLocaleString()}
+          </p>
+          <div>
+            <Button
+              href={option.DeeplinkUrl}
+              target="_blank"
+              variant="contained"
+              color="secondary"
+              className={classes.button}
+            >
+              View Deal
+            </Button>
+          </div>
         </div>
-        <p>
-          {currency.Symbol}
-          {Math.round(option.Price).toLocaleString()}
-        </p>
-        <div>
-          <Button
-            href={option.DeeplinkUrl}
-            target="_blank"
-            variant="contained"
-            color="secondary"
-            className={classes.button}
-          >
-            View Deal
-          </Button>
-        </div>
+        {index !== arr.length - 1 ? <Divider /> : ''}
       </div>
     );
   });

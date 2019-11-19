@@ -15,7 +15,7 @@ const styles = theme =>
       color: theme.palette.secondary.contrastText
     },
     expandIcon: {
-      backgroundColor: theme.palette.primary.dark,
+      backgroundColor: theme.palette.secondary.dark,
       borderRadius: '50%'
     }
   };
