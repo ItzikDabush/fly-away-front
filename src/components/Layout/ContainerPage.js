@@ -9,13 +9,9 @@ const styles = theme => ({
     border: 0,
     borderRadius: 3,
     height: "100%",
-    // boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
     color: theme.palette.primary.dark,
-
     padding: "0 30px",
     textAlign: "center",
-    // position: "absolute",
-    // bottom: "0px",
     width: "100%"
   },
   loadingContainer: {
@@ -27,12 +23,11 @@ const styles = theme => ({
   }
 });
 
-function ContainerPage(props) {
+const ContainerPage = ({ classes, isFetching, cityByIp, getOffers }) => {
   const theme = useTheme();
-  const { classes, isFetching, cityByIp } = props;
- 
+
   const handleOffers = data => {
-    props.getOffers(data);
+    getOffers(data);
   };
 
   return (
@@ -48,12 +43,12 @@ function ContainerPage(props) {
           <p>I'm Getting the Details</p>
         </div>
       ) : (
-        <div >
+        <div>
           <InsparationList cityByIp={cityByIp} getOffers={handleOffers} />
         </div>
       )}
     </div>
   );
-}
+};
 
 export default withStyles(styles)(ContainerPage);

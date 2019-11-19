@@ -40,7 +40,6 @@ const styles = theme => ({
   }
 });
 
-// refactor?  to functional comopnent
 const SegmentDetails = props => {
   //refactor to move to helpers file
   //function to convert time duration of a flight in a total minutes to hh mm

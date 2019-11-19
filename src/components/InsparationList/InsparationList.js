@@ -20,7 +20,6 @@ const useStyles = makeStyles(theme => ({
 
 const CityList = ({ getOffers, cityByIp }) => {
   const classes = useStyles();
-
   const handleOffers = data => {
     getOffers(data);
   };
