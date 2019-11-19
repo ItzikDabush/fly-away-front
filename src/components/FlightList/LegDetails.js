@@ -2,20 +2,19 @@ import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import SegmentDetails from "./SegmentDetails";
 
-
 const styles = theme => ({
   root: {
     width: "100%",
     // background: theme.palette.secondary.light,
-    color: 'inherit',
-    fontSize: '0.8rem',
+    color: "inherit",
+    fontSize: "0.8rem"
   },
   top: {
     display: "flex",
     justifyContent: "space-between",
     fontWeight: 600,
-    textAlign: 'end',
-    marginBottom: '10px',
+    textAlign: "end",
+    marginBottom: "10px"
   },
   col: {
     width: "20%"
@@ -24,85 +23,70 @@ const styles = theme => ({
     textAlign: "right"
   },
   segments: {
-    fontSize: '0.7rem'
+    fontSize: "0.7rem"
   }
 });
 
-export class LegDetails extends Component {
-  constructor(props) {
-    super(props);
-    this.timeConvert = this.timeConvert.bind(this);
-    this.getDetails = this.getDetails.bind(this);
-  }
-
-  getDetails(id, detailsOf) {
-
+const LegDetails = ({ classes, legDetails, data }) => {
+  //refactor to move to helpers file
+  const getDetails = (id, detailsOf) => {
     return detailsOf.find(detailedElement => detailedElement.Id === id);
-  }
+  };
 
-  timeConvert(n) {
+  //refactor to move to helpers file
+  const timeConvert = n => {
     let num = n;
     let hours = num / 60;
     let rhours = Math.floor(hours);
     let minutes = (hours - rhours) * 60;
     let rminutes = Math.round(minutes);
     return `${rhours}h ${rminutes}m`;
-  }
+  };
 
-  render() {
-    let {
-      Directionality,
-      OriginStationDetails,
-      DestinationStationDetails,
-      Duration
-    } = this.props.legDetails;
+  const {
+    Directionality,
+    OriginStationDetails,
+    DestinationStationDetails,
+    Duration
+  } = legDetails;
 
-    let newDuration = this.timeConvert(Duration);
-    const { classes } = this.props;
+  const newDuration = timeConvert(Duration);
 
-    let segments = this.props.legDetails.SegmentsDetails.map(segment => {
-      let relevantDataDetailes = {
-        ...segment,
-        Carrier: this.getDetails(segment.Carrier, this.props.data.Carriers),
-        OperatingCarrier: this.getDetails(
-          segment.OperatingCarrier,
-          this.props.data.Carriers
-        ),
-        DestinationStation: this.getDetails(
-          segment.DestinationStation,
-          this.props.data.Places
-        ),
-        OriginStation: this.getDetails(
-          segment.OriginStation,
-          this.props.data.Places
-        )
-      };
-
-      return (
-        <SegmentDetails
-          data={this.props.data}
-          key={segment.Id}
-          {...relevantDataDetailes}
-          fullLegDetails={this.props.legDetails}
-        />
-      );
-    });
+  const segments = legDetails.SegmentsDetails.map(segment => {
+    const relevantDataDetailes = {
+      ...segment,
+      Carrier: getDetails(segment.Carrier, data.Carriers),
+      OperatingCarrier: getDetails(segment.OperatingCarrier, data.Carriers),
+      DestinationStation: getDetails(segment.DestinationStation, data.Places),
+      OriginStation: getDetails(segment.OriginStation, data.Places)
+    };
 
     return (
-      <div className={classes.root}>
-        <div className={this.props.classes.top}>
-          <div className={`${classes.col} ${classes.directionality}`}>
-            {Directionality}
-          </div>
-          <div className={`${classes.col} ${classes.destinations}`}>
-            {OriginStationDetails.Code} - {DestinationStationDetails.Code}
-          </div>
-          <div className={`${classes.col} ${classes.duration}`}>{newDuration}</div>
-        </div>
-        <div className={classes.segments}>{segments}</div>
-      </div>
+      <SegmentDetails
+        data={data}
+        key={segment.Id}
+        {...relevantDataDetailes}
+        fullLegDetails={legDetails}
+      />
     );
-  }
-}
+  });
+
+  return (
+    <div className={classes.root}>
+      <div className={classes.top}>
+        <div className={`${classes.col} ${classes.directionality}`}>
+          {Directionality}
+        </div>
+        <div className={`${classes.col} ${classes.destinations}`}>
+          {OriginStationDetails.Code} - {DestinationStationDetails.Code}
+        </div>
+        <div className={`${classes.col} ${classes.duration}`}>
+          {newDuration}
+        </div>
+      </div>
+      <div className={classes.segments}>{segments}</div>
+    </div>
+  );
+};
 
 export default withStyles(styles, { withTheme: true })(LegDetails);
