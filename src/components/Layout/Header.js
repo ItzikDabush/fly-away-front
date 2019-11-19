@@ -1,4 +1,4 @@
-import React, { Component} from "react";
+import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 
 import MenuItem from "@material-ui/core/MenuItem";
@@ -13,11 +13,9 @@ import FlightIcon from "@material-ui/icons/Flight";
 import currencyList from "./CurrencyList";
 
 const styles = theme => ({
-  
   selectEmpty: {
     marginTop: theme.spacing(2)
   },
-
   "@global": {
     ".MuiInput-underline:before": {
       borderBottom: `1px solid ${theme.palette.primary.contrastText}`
@@ -33,19 +31,18 @@ const styles = theme => ({
     flexGrow: 1
   },
   menuButton: {
-    marginRight: theme.spacing(2),
-
+    marginRight: theme.spacing(2)
   },
   title: {
     flexGrow: 1,
-    fontStyle: 'italic'
+    fontStyle: "italic"
   }
 });
 
 class Header extends Component {
   constructor(props) {
     super(props);
-    this.state = { 
+    this.state = {
       currency: "USD"
     };
   }
@@ -59,9 +56,7 @@ class Header extends Component {
     this.props.handleCurrencyChange(event.target.value);
   };
 
-
   render() {
-    console.log(this.props);
     const { classes } = this.props;
     const menuItems = Object.values(currencyList).map(curr => {
       // console.log(curr)
@@ -71,7 +66,7 @@ class Header extends Component {
           key={curr.code}
           value={curr.code}
         >
-          {curr.code} - {curr.symbol} 
+          {curr.code} - {curr.symbol}
         </MenuItem>
       );
     });
@@ -83,16 +78,16 @@ class Header extends Component {
             className={classes.menuButton}
             color="inherit"
             aria-label="menu"
-            href='/'
+            href="/"
           >
-            <FlightIcon fontSize="small"/>
+            <FlightIcon fontSize="small" />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
             Fly Away
           </Typography>
           <FormControl className={classes.formControl}>
             <Select
-            disableUnderline
+              disableUnderline
               color="inherit"
               className={classes.select}
               labelid="demo-simple-select-label"

@@ -12,7 +12,7 @@ import addDays from "date-fns/addDays";
 
 const useStyles = makeStyles({
   card: {
-    maxWidth: '100%'
+    maxWidth: "100%"
   },
   media: {
     height: 100
@@ -28,13 +28,12 @@ const useStyles = makeStyles({
   }
 });
 
-function CityCard({ placeId, originByIp, name, img, country, getOffers }) {
+const CityCard = ({ placeId, originByIp, name, img, country, getOffers }) => {
   const classes = useStyles();
 
   function getDatesForInspirations() {
     // Refactor ? maybe an outside function? class?
     let date = new Date();
-    let dateDetails = {};
     const weekendStart = endOfWeek(date, { weekStartsOn: 6 }); //hack to get friday
     const weekendEnd = addDays(weekendStart, 3);
     const weekendStartFormated = format(weekendStart, "yyyy-MM-dd");
@@ -42,7 +41,7 @@ function CityCard({ placeId, originByIp, name, img, country, getOffers }) {
     const outboundDate = format(weekendStart, "eee, MMM d");
     const inboundDate = format(weekendEnd, "eee, MMM d");
 
-    dateDetails = {
+    let dateDetails = {
       weekendStart,
       weekendStartFormated,
       weekendEndFormated,
@@ -53,6 +52,7 @@ function CityCard({ placeId, originByIp, name, img, country, getOffers }) {
   }
 
   const dateDetails = getDatesForInspirations();
+
   function handleClick(e) {
     const tripInspiration = {
       originPlace: { PlaceId: originByIp },
@@ -66,7 +66,6 @@ function CityCard({ placeId, originByIp, name, img, country, getOffers }) {
       oneWay: false,
       sortType: "price"
     };
-
     getOffers(tripInspiration);
   }
 
@@ -101,6 +100,6 @@ function CityCard({ placeId, originByIp, name, img, country, getOffers }) {
       </CardContent>
     </Card>
   );
-}
+};
 
 export default CityCard;
