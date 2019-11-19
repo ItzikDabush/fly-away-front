@@ -21,40 +21,35 @@ const styles = theme => ({
   }
 });
 
-// refactor ? functional component
 
-class Itiniary extends Component {
-  render() {
-    const {
-      classes,
-      carriers,
-      lowestPrice,
-      outbound,
-      inbound,
-      itineraryDetails,
-      data
-    } = this.props;
-
-    return (
-      <div className={classes.root}>
-        <div className={classes.top}>
-          <p className={classes.itiniaryCarriers}>{carriers}</p>
-          <p>
-            {itineraryDetails.PricingOptions.length} Deals from{" "}
-            {data.Currencies[0].Symbol} {lowestPrice}
-          </p>
-        </div>
-        <div className={classes.legsContainer}>
-          <LegSummery name="outbound" details={outbound.outboundDetails} />
-          {inbound ? (
-            <LegSummery name="inbound" details={inbound.inboundDetails} />
-          ) : (
-            ""
-          )}
-        </div>
+const Itiniary = ({
+  classes,
+  carriers,
+  lowestPrice,
+  outbound,
+  inbound,
+  itineraryDetails,
+  data
+}) => {
+  return (
+    <div className={classes.root}>
+      <div className={classes.top}>
+        <p className={classes.itiniaryCarriers}>{carriers}</p>
+        <p>
+          {itineraryDetails.PricingOptions.length} Deals from{" "}
+          {data.Currencies[0].Symbol} {lowestPrice}
+        </p>
       </div>
-    );
-  }
-}
+      <div className={classes.legsContainer}>
+        <LegSummery name="outbound" details={outbound.outboundDetails} />
+        {inbound ? (
+          <LegSummery name="inbound" details={inbound.inboundDetails} />
+        ) : (
+          ""
+        )}
+      </div>
+    </div>
+  );
+};
 
 export default withStyles(styles, { withTheme: true })(Itiniary);
