@@ -13,7 +13,6 @@ const styles = theme => ({
   root: {
     width: "100%",
     flexGrow: 1
-    // backgroundColor: theme.palette.secondary.light
   }
 });
 
@@ -33,13 +32,12 @@ function TabPanel(props) {
   );
 }
 
-export class DetailsTabs extends Component {
+class DetailsTabs extends Component {
   constructor(props) {
     super(props);
     this.state = {
       value: 0
     };
-
     this.a11yProps = this.a11yProps.bind(this);
   }
 
@@ -54,12 +52,12 @@ export class DetailsTabs extends Component {
     this.setState({ value: newValue });
   };
   render() {
-    const { classes } = this.props;
-
+    const { classes, data, outbound, inbound, itineraryDetails } = this.props;
+    const { value } = this.state;
     return (
       <div className={classes.root}>
         <Tabs
-          value={this.state.value}
+          value={value}
           indicatorColor="primary"
           textColor="primary"
           onChange={this.handleChange}
@@ -68,31 +66,31 @@ export class DetailsTabs extends Component {
           <Tab label="Flight Details" {...this.a11yProps(0)} />
           <Tab label="Prices" {...this.a11yProps(1)} />
         </Tabs>
-        <TabPanel value={this.state.value} index={0}>
+        <TabPanel value={value} index={0}>
           <LegDetails
-            data={this.props.data}
+            data={data}
             name="Outbound"
-            legDetails={this.props.outbound.outboundDetails}
+            legDetails={outbound.outboundDetails}
           />
 
-          {this.props.inbound ? (
+          {inbound ? (
             <>
               <Divider />
               <LegDetails
-                data={this.props.data}
+                data={data}
                 name="Inbound"
-                legDetails={this.props.inbound.inboundDetails}
+                legDetails={inbound.inboundDetails}
               />
             </>
           ) : (
             ""
           )}
         </TabPanel>
-        <TabPanel value={this.state.value} index={1}>
+        <TabPanel value={value} index={1}>
           <Bookinglist
-            currency={this.props.data.Currencies[0]}
-            agents={this.props.data.Agents}
-            bookingDetails={this.props.itineraryDetails.PricingOptions}
+            currency={data.Currencies[0]}
+            agents={data.Agents}
+            bookingDetails={itineraryDetails.PricingOptions}
           />
         </TabPanel>
       </div>
