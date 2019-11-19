@@ -12,16 +12,13 @@ import Button from "@material-ui/core/Button";
 import InputField from "./InputField";
 import DateComp from "./DateComp";
 import Paper from "@material-ui/core/Paper";
-import sizes from '../sizes'
-
+import sizes from "../sizes";
 
 const styles = theme =>
   console.log(theme) || {
     root: {
       background: theme.palette.secondary.dark,
       border: 0,
-      // borderRadius: 3,
-      // boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
       color: theme.palette.primary.contrastText,
       zIndex: 100,
       padding: "30px 30px",
@@ -34,7 +31,7 @@ const styles = theme =>
       border: `1px solid ${theme.palette.secondary.light}`,
       background: theme.palette.secondary.main,
       padding: "10px",
-      borderRadius: "5px",
+      borderRadius: "5px"
     },
     input: {
       display: "none"
@@ -46,7 +43,7 @@ const styles = theme =>
       justifyContent: "center",
       fontSize: "0.5rem",
       [sizes.minWidth("sm")]: {
-       order: 5
+        order: 5
       }
     },
     button: {
@@ -54,19 +51,19 @@ const styles = theme =>
       margin: "25px 0 0 0",
       [sizes.minWidth("md")]: {
         width: "15%",
-        margin: '35px 0 10px 0',
+        margin: "35px 0 10px 0"
       }
     },
     form: {
       [sizes.minWidth("md")]: {
         display: "flex",
-        flexWrap: 'wrap',
-        justifyContent: 'space-between',
+        flexWrap: "wrap",
+        justifyContent: "space-between"
       }
     },
     inputsContainer: {
       [sizes.minWidth("md")]: {
-        width: '40%',
+        width: "40%"
       }
     }
   };
@@ -137,7 +134,6 @@ class TripDetails extends Component {
                 placeholder="From"
                 name="originPlace"
               />
-
               <DateComp
                 name="outboundDate"
                 handleChoose={this.handleChoose}

@@ -5,12 +5,11 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from "react-router-dom";
 
-
+// refactor ? is router needed?
 ReactDOM.render(
     <BrowserRouter>
       <App />
     </BrowserRouter>,
-  
     document.getElementById("root")
   );
   

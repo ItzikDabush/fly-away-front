@@ -54,11 +54,10 @@ class InputField extends Component {
   }
   render() {
     const { classes } = this.props;
-  
+
     return (
       <AsyncSelect
         color="primary"
-        
         className={classes.root}
         placeholder={this.props.placeholder}
         cacheOptions

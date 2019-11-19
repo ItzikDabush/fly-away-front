@@ -72,7 +72,6 @@ class DetailsTabs extends Component {
             name="Outbound"
             legDetails={outbound.outboundDetails}
           />
-
           {inbound ? (
             <>
               <Divider />
@@ -98,4 +97,4 @@ class DetailsTabs extends Component {
   }
 }
 
-export default withStyles(styles)(DetailsTabs);
+export default withStyles(styles, { withTheme: true })(DetailsTabs);
