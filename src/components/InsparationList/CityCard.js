@@ -31,8 +31,8 @@ const useStyles = makeStyles({
 const CityCard = ({ placeId, originByIp, name, img, country, getOffers }) => {
   const classes = useStyles();
 
+  // Refactor ? maybe an outside function? class?
   function getDatesForInspirations() {
-    // Refactor ? maybe an outside function? class?
     let date = new Date();
     const weekendStart = endOfWeek(date, { weekStartsOn: 6 }); //hack to get friday
     const weekendEnd = addDays(weekendStart, 3);

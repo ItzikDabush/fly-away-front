@@ -27,7 +27,6 @@ const styles = theme =>
       padding: "30px 30px",
       marginTop: "50px"
     },
-
     DateAndDestinationContainer: {
       display: "flex",
       justifyContent: "space-between",
@@ -36,9 +35,7 @@ const styles = theme =>
       background: theme.palette.secondary.main,
       padding: "10px",
       borderRadius: "5px",
-     
     },
-
     input: {
       display: "none"
     },
@@ -50,7 +47,6 @@ const styles = theme =>
       fontSize: "0.5rem",
       [sizes.minWidth("sm")]: {
        order: 5
-        
       }
     },
     button: {
@@ -59,7 +55,6 @@ const styles = theme =>
       [sizes.minWidth("md")]: {
         width: "15%",
         margin: '35px 0 10px 0',
-
       }
     },
     form: {
@@ -72,8 +67,6 @@ const styles = theme =>
     inputsContainer: {
       [sizes.minWidth("md")]: {
         width: '40%',
-     
-        
       }
     }
   };
@@ -97,7 +90,7 @@ class TripDetails extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  //Set the Select inputv alue to be the outboundDate/inboundDate
+  //Set the Select input alue to be the outboundDate/inboundDate
   // if the identifier id outboundate then set the inbounde date to 5 days ahead - affect on the current value
   handleChoose(chosen, identeifier, newInboundedate) {
     this.setState({
