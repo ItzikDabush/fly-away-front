@@ -18,9 +18,7 @@ const styles = theme => ({
   }
 });
 
-
-const BookingList = props => {
-  const { classes, agents, bookingDetails, currency } = props;
+const BookingList = ({ classes, agents, bookingDetails, currency }) => {
   let bookingOptions = bookingDetails.map(option => {
     let agent = agents.find(agent => agent.Id === option.Agents[0]);
     return (
