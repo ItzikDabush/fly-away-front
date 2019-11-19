@@ -27,7 +27,7 @@ const Footer = ({ classes }) => {
       <footer className={classes.root}>
         <a
           className={classes.links}
-          href="https://www.linkedin.com/in/itzikdabush/"
+          href="https://github.com/ItzikDabush"
           target="_blank"
           rel="noopener noreferrer"
         >
