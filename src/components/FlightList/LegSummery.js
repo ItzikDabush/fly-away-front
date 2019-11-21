@@ -1,7 +1,8 @@
 import React from "react";
-import format from "date-fns/format";
 import { withStyles } from "@material-ui/core/styles";
+import format from "date-fns/format";
 import Tooltip from "@material-ui/core/Tooltip";
+import { durationConvertToTotaltime } from "../helpers";
 
 const styles = theme => ({
   root: {
@@ -13,6 +14,7 @@ const styles = theme => ({
   },
   imgCarrier: {
     width: "15%",
+    maxWidth: "90px",
     "& img": {
       maxWidth: "100%"
     }
@@ -43,16 +45,6 @@ const styles = theme => ({
 });
 
 const LegSummery = ({ classes, details }) => {
-  //refactor to move to helpers file
-  const timeConvert = n => {
-    let num = n;
-    let hours = num / 60;
-    let rhours = Math.floor(hours);
-    let minutes = (hours - rhours) * 60;
-    let rminutes = Math.round(minutes);
-    return `${rhours}h ${rminutes}m`;
-  };
-
   const {
     Arrival,
     Departure,
@@ -63,7 +55,7 @@ const LegSummery = ({ classes, details }) => {
     StopsDetails
   } = details;
 
-  const durationInHours = timeConvert(Duration);
+  const durationInHours = durationConvertToTotaltime(Duration);
   const DepartureTime = format(new Date(Departure), "HH:mm");
   const ArrivalTime = format(new Date(Arrival), "HH:mm");
 

@@ -3,6 +3,8 @@ import { withStyles } from "@material-ui/core/styles";
 import format from "date-fns/format";
 import differenceInMinutes from "date-fns/differenceInMinutes";
 import Divider from "@material-ui/core/Divider";
+import sizes from "../sizes";
+import { durationConvertToTotaltime, getDetails } from '../helpers'
 
 const styles = theme => ({
   root: {
@@ -10,7 +12,15 @@ const styles = theme => ({
     display: "flex"
   },
   leftCol: {
-    width: "20%"
+    width: "20%",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "space-evenly",
+
+    [sizes.minWidth("md")]: {
+      flexDirection: "row"
+    }
   },
   middleCol: {
     width: "60%",
@@ -18,11 +28,15 @@ const styles = theme => ({
     textAlign: "center"
   },
   imgContainer: {
-    width: "40px",
+    width: "80px",
+    display: "none",
     "& img": {
       maxWidth: "100%"
     },
-    marginLeft: "10px"
+    marginLeft: "10px",
+    [sizes.minWidth("sm")]: {
+      display: "initial"
+    }
   },
   rightCol: {
     width: "20%",
@@ -41,22 +55,6 @@ const styles = theme => ({
 });
 
 const SegmentDetails = props => {
-  //refactor to move to helpers file
-  //function to convert time duration of a flight in a total minutes to hh mm
-  const timeConvert = n => {
-    let num = n;
-    let hours = num / 60;
-    let rhours = Math.floor(hours);
-    let minutes = (hours - rhours) * 60;
-    let rminutes = Math.round(minutes);
-    return `${rhours}h ${rminutes}m`;
-  };
-
-  //refactor to move to helpers file
-  const getDetails = (id, detailsOf) => {
-    return detailsOf.find(detailedElement => detailedElement.Id === id);
-  };
-
   const {
     classes,
     OriginStation,
@@ -83,29 +81,28 @@ const SegmentDetails = props => {
   const DepartureDay = format(new Date(DepartureDateTime), "eee");
   const DepartureTime = format(new Date(DepartureDateTime), "HH:mm a");
   const ArrivalTime = format(new Date(ArrivalDateTime), "HH:mm a");
-  const ArrivalDay = format(new Date(ArrivalDateTime), "eee");
-  const DurationInHours = timeConvert(Duration);
+  // const ArrivalDay = format(new Date(ArrivalDateTime), "eee");
+  const DurationInHours = durationConvertToTotaltime(Duration);
   let layoverInMin;
   let layoverFull;
 
-  // to fix the bug with 2 or more layovers
   if (DestinationStation.Id !== fullLegDetails.DestinationStation) {
     layoverInMin = differenceInMinutes(
       new Date(fullLegDetails.SegmentsDetails[1].DepartureDateTime),
       new Date(fullLegDetails.SegmentsDetails[0].ArrivalDateTime)
     );
-    layoverFull = timeConvert(layoverInMin);
+    layoverFull = durationConvertToTotaltime(layoverInMin);
   }
 
   return (
     <div className={classes.root}>
       <div className={`${classes.smHeading} ${classes.leftCol}`}>
         {DepartureDay}, {DepartureDayDate}
-      </div>
-      <div className={classes.middleCol}>
         <div className={classes.imgContainer}>
           <img src={Carrier.ImageUrl} alt={Carrier.Name} />
         </div>
+      </div>
+      <div className={classes.middleCol}>
         <div className={classes.details}>
           <p>
             {DepartureTime} - {ArrivalTime}
@@ -130,7 +127,7 @@ const SegmentDetails = props => {
         </div>
       </div>
       <div className={classes.rightCol}>
-        {DurationInHours}
+        {DurationInHours}       
         <p>{layoverFull}</p>
       </div>
     </div>

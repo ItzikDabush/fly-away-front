@@ -87,10 +87,6 @@ class DateComp extends Component {
           KeyboardButtonProps={{
             "aria-label": "change date"
           }}
-          
-          onAccept={e => {
-            console.log(e);
-          }}
         />
         <KeyboardDatePicker
           className={classes.datePickerDialogMine}

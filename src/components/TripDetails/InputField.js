@@ -33,7 +33,6 @@ const promiseOptions = inputValue =>
       }
     })
     .then(re => {
-      // console.log(re.data.Places)
       options = re.data.Places.map(place => {
         place.value = place.PlaceId;
         place.label = place.PlaceName;
@@ -59,9 +58,7 @@ class InputField extends Component {
       <AsyncSelect
         color="primary"
         className={classes.root}
-        placeholder={this.props.placeholder}
-        cacheOptions
-        autoFocus={this.props.autoFocus}
+        placeholder={this.props.placeholder} 
         loadOptions={promiseOptions}
         onChange={this.handleChange}
       />

@@ -31,7 +31,8 @@ const styles = theme => ({
     flexGrow: 1
   },
   menuButton: {
-    marginRight: theme.spacing(2)
+    marginRight: theme.spacing(2),
+    marginLeft: theme.spacing(1)
   },
   title: {
     flexGrow: 1,
@@ -59,7 +60,7 @@ class Header extends Component {
   render() {
     const { classes } = this.props;
     const menuItems = Object.values(currencyList).map(curr => {
-      // console.log(curr)
+  
       return (
         <MenuItem
           className={classes.menuItem}
@@ -71,7 +72,7 @@ class Header extends Component {
       );
     });
     return (
-      <AppBar position="fixed">
+      <AppBar position="fixed" elevation={5}>
         <Toolbar>
           <IconButton
             edge="start"
@@ -82,7 +83,11 @@ class Header extends Component {
           >
             <FlightIcon fontSize="small" />
           </IconButton>
-          <Typography variant="h6" className={classes.title}>
+          <Typography
+            component="h6"
+            variant="subtitle1"
+            className={classes.title}
+          >
             Fly Away
           </Typography>
           <FormControl className={classes.formControl}>

@@ -1,5 +1,6 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
+import { durationConvertToTotaltime, getDetails } from '../helpers'
 import SegmentDetails from "./SegmentDetails";
 
 const styles = theme => ({
@@ -13,11 +14,11 @@ const styles = theme => ({
     display: "flex",
     justifyContent: "space-between",
     fontWeight: 600,
-    textAlign: "end",
+
     marginBottom: "10px"
   },
   col: {
-    width: "20%"
+    width: "100%"
   },
   duration: {
     textAlign: "right"
@@ -28,20 +29,6 @@ const styles = theme => ({
 });
 
 const LegDetails = ({ classes, legDetails, data }) => {
-  //refactor to move to helpers file
-  const getDetails = (id, detailsOf) => {
-    return detailsOf.find(detailedElement => detailedElement.Id === id);
-  };
-
-  //refactor to move to helpers file
-  const timeConvert = n => {
-    let num = n;
-    let hours = num / 60;
-    let rhours = Math.floor(hours);
-    let minutes = (hours - rhours) * 60;
-    let rminutes = Math.round(minutes);
-    return `${rhours}h ${rminutes}m`;
-  };
 
   const {
     Directionality,
@@ -50,7 +37,7 @@ const LegDetails = ({ classes, legDetails, data }) => {
     Duration
   } = legDetails;
 
-  const newDuration = timeConvert(Duration);
+  const newDuration = durationConvertToTotaltime(Duration);
 
   const segments = legDetails.SegmentsDetails.map(segment => {
     const relevantDataDetailes = {
@@ -75,13 +62,8 @@ const LegDetails = ({ classes, legDetails, data }) => {
     <div className={classes.root}>
       <div className={classes.top}>
         <div className={`${classes.col} ${classes.directionality}`}>
-          {Directionality}
-        </div>
-        <div className={`${classes.col} ${classes.destinations}`}>
-          {OriginStationDetails.Code} - {DestinationStationDetails.Code}
-        </div>
-        <div className={`${classes.col} ${classes.duration}`}>
-          {newDuration}
+          {Directionality} , {OriginStationDetails.Code} -{" "}
+          {DestinationStationDetails.Code}, {newDuration}
         </div>
       </div>
       <div className={classes.segments}>{segments}</div>

@@ -5,11 +5,11 @@ import InsparationList from "../InsparationList/InsparationList";
 
 const styles = theme => ({
   root: {
-    background: theme.palette.primary.light,
+    // background: theme.palette.secondary.dark,
     border: 0,
     height: "100%",
-    color: theme.palette.primary.dark,
-    padding: "30px 30px",
+    color: theme.palette.text.secondary,
+    padding: "30px 30px 0 30px" ,
     textAlign: "center",
     width: "100%"
   },
@@ -36,15 +36,15 @@ const ContainerPage = ({ classes, isFetching, cityByIp, getOffers }) => {
           <DotLoader
             sizeUnit={"px"}
             size={150}
-            color={theme.palette.secondary.main}
+            color={theme.palette.text.secondary}
             loading
           />
           <p>I'm Getting the Details</p>
         </div>
       ) : (
-        <div>
+       
           <InsparationList cityByIp={cityByIp} getOffers={handleOffers} />
-        </div>
+       
       )}
     </div>
   );

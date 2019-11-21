@@ -7,18 +7,14 @@ import Divider from "@material-ui/core/Divider";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import DetailsTabs from "./DetailsTabs";
 import Itiniary from "./Itiniary";
+import { getDetailsOfLeg } from '../helpers'
 
-const styles = theme =>
-  console.log(theme) || {
+const styles = theme => ({
     root: {
       backgroundColor: "white",
       color: theme.palette.secondary.contrastText
     },
-    expandIcon: {
-      backgroundColor: theme.palette.secondary.dark,
-      borderRadius: '50%'
-    }
-  };
+  });
 
 class FlightListMaterial extends Component {
   constructor(props) {
@@ -26,44 +22,8 @@ class FlightListMaterial extends Component {
     this.state = {
       expanded: false
     };
-    this.getDetailsOfLeg = this.getDetailsOfLeg.bind(this);
   }
 
-  //refactor to move to helpers file
-  getDetails(id, detailsOf) {
-    return detailsOf.find(detailedElement => detailedElement.Id === id);
-  }
-  //refactor to move to helpers file
-  getDetailsOfLeg(legId) {
-    const { Legs, Carriers, Places, Segments } = this.props.results;
-    let LegDetails = this.getDetails(legId, Legs);
-
-    LegDetails.CarriersDetails = LegDetails.Carriers.map(id => {
-      return this.getDetails(id, Carriers);
-    });
-
-    LegDetails.DestinationStationDetails = this.getDetails(
-      LegDetails.DestinationStation,
-      Places
-    );
-
-    LegDetails.OriginStationDetails = this.getDetails(
-      LegDetails.OriginStation,
-      Places
-    );
-
-    LegDetails.StopsDetails =
-      LegDetails.Stops.length === 0
-        ? "Direct"
-        : LegDetails.Stops.map(stop => {
-            return this.getDetails(stop, Places);
-          });
-
-    LegDetails.SegmentsDetails = LegDetails.SegmentIds.map(id => {
-      return this.getDetails(id, Segments);
-    });
-    return LegDetails;
-  }
   handleChange = panel => (event, isExpanded) => {
     isExpanded
       ? this.setState({ expanded: panel })
@@ -75,7 +35,7 @@ class FlightListMaterial extends Component {
     const { Itineraries } = this.props.results;
 
     let itineraries = Itineraries.map((itin, index) => {
-      let outboundDetails = this.getDetailsOfLeg(itin.OutboundLegId);
+      let outboundDetails = getDetailsOfLeg(itin.OutboundLegId, this.props.results);
       let carriersOutbound = outboundDetails.CarriersDetails.map(carrier => {
         return carrier.Name;
       });
@@ -86,7 +46,7 @@ class FlightListMaterial extends Component {
       let inbound = null;
       let carriersInbound = [];
       if (itin.InboundLegId) {
-        let inboundDetails = this.getDetailsOfLeg(itin.InboundLegId);
+        let inboundDetails = getDetailsOfLeg(itin.InboundLegId, this.props.results);
         carriersInbound = inboundDetails.CarriersDetails.map(carrier => {
           return carrier.Name;
         });

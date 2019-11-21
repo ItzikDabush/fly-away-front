@@ -6,24 +6,29 @@ import Paper from "@material-ui/core/Paper";
 
 const styles = theme => ({
   root: {
-    background: theme.palette.primary.main,
+    // background: theme.palette.secondary.dark,
     border: 0,
     color: theme.palette.text.secondary,
     padding: "5px 30px",
     textAlign: "center",
     width: "100%",
-    fontSize: "0.8rem"
-  },
+    fontSize: "0.8rem",
+    position: 'relative',
+    bottom: 0,
+    marginTop: '20px',  },
   links: {
     textDecoration: "none",
     color: theme.palette.text.secondary,
     marginLeft: "10px"
+  },
+  container: {
+    marginTop: '20px'
   }
 });
 
 const Footer = ({ classes }) => {
   return (
-    <Paper elevation={5} square>
+    <Paper elevation={0} square className={classes.container}>
       <footer className={classes.root}>
         <a
           className={classes.links}

@@ -1,6 +1,7 @@
-import React, { Component } from "react";
-import LegSummery from "./LegSummery";
+import React from "react";
 import { withStyles } from "@material-ui/core/styles";
+import LegSummery from "./LegSummery";
+import sizes from "../sizes";
 
 const styles = theme => ({
   root: {
@@ -17,7 +18,10 @@ const styles = theme => ({
     fontSize: "0.7rem",
     marginBottom: "1rem",
     fontStyle: "italic",
-    fontWeight: 500
+    fontWeight: 500,
+    [sizes.minWidth("md")]: {
+      fontSize: "1rem",
+    }
   }
 });
 

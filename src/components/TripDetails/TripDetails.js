@@ -1,27 +1,23 @@
 import React, { Component } from "react";
-import Typography from "@material-ui/core/Typography";
-
-import { withStyles } from "@material-ui/core/styles";
 import format from "date-fns/format";
 import addDays from "date-fns/addDays";
-
+import { withStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
 import Switch from "@material-ui/core/Switch";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
-
 import InputField from "./InputField";
 import DateComp from "./DateComp";
-import Paper from "@material-ui/core/Paper";
 import sizes from "../sizes";
 
-const styles = theme =>
-  console.log(theme) || {
+const styles = theme => ({
     root: {
-      background: theme.palette.secondary.dark,
+      // background: theme.palette.secondary.dark,
       border: 0,
       color: theme.palette.primary.contrastText,
       zIndex: 100,
-      padding: "30px 30px",
+      padding: "30px 30px 0 30px",
       marginTop: "50px"
     },
     DateAndDestinationContainer: {
@@ -44,6 +40,9 @@ const styles = theme =>
       fontSize: "0.5rem",
       [sizes.minWidth("sm")]: {
         order: 5
+      },
+      '& span': {
+        fontSize: '0.75rem'
       }
     },
     button: {
@@ -66,7 +65,7 @@ const styles = theme =>
         width: "40%"
       }
     }
-  };
+  });
 
 class TripDetails extends Component {
   constructor(props) {
@@ -110,7 +109,7 @@ class TripDetails extends Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, cityBySkyscanner, cityByIp } = this.props;
     const {
       originPlace,
       destinationPlace,
@@ -121,7 +120,7 @@ class TripDetails extends Component {
     } = this.state;
 
     return (
-      <Paper className={classes.root} elevation={5} square>
+      <Paper className={classes.root} elevation={0} square>
         <form className={classes.form}>
           <div className={classes.inputsContainer}>
             <Typography variant="caption" display="block" gutterBottom>
@@ -131,8 +130,9 @@ class TripDetails extends Component {
               <InputField
                 autoFocus={"true"}
                 handleCityChoose={this.handleChoose}
-                placeholder="From"
+                placeholder="Type a City"
                 name="originPlace"
+                cityByIp={cityByIp} cityBySkyscanner={cityBySkyscanner}
               />
               <DateComp
                 name="outboundDate"
@@ -176,7 +176,7 @@ class TripDetails extends Component {
             <div className={classes.DateAndDestinationContainer}>
               <InputField
                 handleCityChoose={this.handleChoose}
-                placeholder="To"
+                placeholder="Type a Destination"
                 name="destinationPlace"
                 isExpend={oneWay}
               />

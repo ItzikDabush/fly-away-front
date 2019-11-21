@@ -3,7 +3,7 @@ import axios from "axios";
 import TripDetails from "./components/TripDetails/TripDetails";
 import FlightListMaterial from "./components/FlightList/FlightListMaterial";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import seedOffers from "./seedOffers"; //delete on deployment
+
 import { withStyles } from "@material-ui/core/styles";
 import ContainerPage from "./components/Layout/ContainerPage";
 import Footer from "./components/Layout/Footer";
@@ -21,7 +21,7 @@ const theme = createMuiTheme({
 const styles = theme => ({
   root: {
     width: "100%",
-    height: "100%",
+    height: '100%',
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between"
@@ -51,7 +51,6 @@ class App extends Component {
     axios
       .get("http://ip-api.com/json/")
       .then(response => {
-        console.log(response);
         this.setState({
           //get location data of the user
           sitePrefernces: {
@@ -89,7 +88,6 @@ class App extends Component {
 
 
   getOffers(data) {
-    console.log(data);
     this.setState(
       { resultsForTrip: "", isFetching: true, tripToSearch: { ...data } }, //refactor? send the data object insted of the the state?.
       () => {
@@ -116,7 +114,6 @@ class App extends Component {
             }
           })
           .then( res => {
-            console.log()
             this.setState({ resultsForTrip: res.data, isFetching: false });
           })
           .catch(err => {
@@ -141,7 +138,7 @@ class App extends Component {
       <ThemeProvider theme={theme}>
         <div className={classes.root}>
           <Header handleCurrencyChange={this.handleCurrencyChange} />
-          <TripDetails getOffers={this.getOffers} />
+          <TripDetails getOffers={this.getOffers} cityByIp={sitePrefernces.cityByIp} cityBySkyscanner={sitePrefernces.cityBySkyscanner}/>
           {/* // refactor  -  indicate that there are no itineries for the trip - such case is identified as "this.state.resultsForTrip.Itineraries" will be equal to an empty array */}
           {resultsForTrip.Itineraries ? (
             <FlightListMaterial results={resultsForTrip} />

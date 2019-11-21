@@ -16,9 +16,13 @@ const styles = theme => ({
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
+    width: "100%"
+  },
+  imageContainer: {
+    maxWidth: "100px",
     "& img": {
-      width: "60px",
-      margin: '12px 0'
+      maxWidth: '100%',
+      margin: "12px 0"
     }
   }
 });
@@ -28,8 +32,8 @@ const BookingList = ({ classes, agents, bookingDetails, currency }) => {
     let agent = agents.find(agent => agent.Id === option.Agents[0]);
     return (
       <div key={option.DeeplinkUrl}>
-        <div className={classes.optionContainer} >
-          <div>
+        <div className={classes.optionContainer}>
+          <div className={classes.imageContainer}>
             <img src={agent.ImageUrl} alt={agent.Name} />
           </div>
           <p>
@@ -48,7 +52,7 @@ const BookingList = ({ classes, agents, bookingDetails, currency }) => {
             </Button>
           </div>
         </div>
-        {index !== arr.length - 1 ? <Divider /> : ''}
+        {index !== arr.length - 1 ? <Divider /> : ""}
       </div>
     );
   });
