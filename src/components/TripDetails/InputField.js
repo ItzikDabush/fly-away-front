@@ -27,10 +27,7 @@ const filterOptions = inputValue => {
 };
 const promiseOptions = inputValue =>
   axios
-    .get(`${serverUrl}/getAirport`, {
-      headers: {
-        "Content-Type": "application/json"
-      },
+    .post(`${serverUrl}/getAirport`, {
       data: {
         originByIP: inputValue
       }
