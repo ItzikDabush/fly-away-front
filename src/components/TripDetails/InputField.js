@@ -27,7 +27,7 @@ const filterOptions = inputValue => {
 };
 const promiseOptions = inputValue =>
   axios
-    .post(`${serverUrl}/getAirport`, {
+    .get(`${serverUrl}/getAirport`, {
       headers: {
         "Content-Type": "application/json"
       },
